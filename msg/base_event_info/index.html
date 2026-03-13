@@ -328,6 +328,7 @@
 <th>值</th>
 <th>说明</th>
 <th>发布组件</th>
+<th>触发频率</th>
 </tr>
 </thead>
 <tbody>
@@ -336,33 +337,58 @@
 <td>map_loop_closure</td>
 <td>地图闭环检测</td>
 <td>slam</td>
+<td>事件驱动</td>
 </tr>
 <tr>
 <td>SystemEventObstacleBlocked</td>
 <td>obstacle_blocked</td>
 <td>路径被障碍物阻挡</td>
-<td>is_path_valid</td>
+<td>collision_monitor</td>
+<td>实时</td>
 </tr>
 <tr>
 <td>SystemEventNearObstacle</td>
 <td>near_obstacle</td>
 <td>检测到近处障碍物</td>
 <td>collision_monitor</td>
+<td>每1秒</td>
 </tr>
 <tr>
 <td>SystemEventNearObstacleWhenStationary</td>
 <td>near_obstacle_when_stationary</td>
 <td>机器人静止时检测到近处障碍物</td>
 <td>collision_monitor</td>
+<td>每1秒</td>
 </tr>
 <tr>
 <td>SystemEventOutOfMap</td>
 <td>out_of_map</td>
 <td>机器人走出地图边界或进入未知区域</td>
 <td>monitor</td>
+<td>实时</td>
+</tr>
+<tr>
+<td>SystemEventEnterForbiddenArea</td>
+<td>enter_forbidden_area</td>
+<td>机器人进入禁区</td>
+<td>monitor</td>
+<td>每5秒</td>
+</tr>
+<tr>
+<td>SystemEventEnterDangerousArea</td>
+<td>enter_dangerous_area</td>
+<td>机器人进入危险区域（限速区）</td>
+<td>monitor</td>
+<td>每5秒</td>
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p><strong>注意</strong>:
+- <code>enter_forbidden_area</code> 和 <code>enter_dangerous_area</code> 在机器人位于对应区域内时，每5秒触发一次
+- 机器人离开区域时会在日志中记录，但不会触发新事件
+- 事件消息中包含区域ID、速度限制（危险区）和机器人位置信息</p>
+</blockquote>
 <h3 id="_5">相关消息</h3>
 <ul>
 <li><a href="../events_info/">EventsInfo</a> - 聚合事件信息</li>
