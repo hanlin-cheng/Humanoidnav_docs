@@ -1,0 +1,99 @@
+site_name: HumanoidNav ROS2 API 文档
+
+nav:
+    - 首页: index.md
+    - ROS2 接口文档: ros_api.md
+    - 服务定义:
+        - 定位导航模块:
+            - fourier_msgs/SetMode: srv/set_mode.md
+            - fourier_msgs/LoadMap: srv/load_map.md
+            - fourier_msgs/SaveMap: srv/save_map.md
+            - fourier_msgs/GetCurrentAction: srv/get_current_action.md
+            - fourier_msgs/CancelCurrentAction: srv/cancel_current_action.md
+        - 楼层管理:
+            - map_manager/AddFloor: srv/add_floor.md
+            - map_manager/RemoveFloor: srv/remove_floor.md
+            - map_manager/UpdateFloor: srv/update_floor.md
+            - map_manager/ListFloors: srv/list_floors.md
+            - map_manager/GetCurrentFloor: srv/get_current_floor.md
+            - map_manager/SwitchFloor: srv/switch_floor.md
+            - map_manager/ClearFloor: srv/clear_floor.md
+            - map_manager/LoadFloor: srv/load_floor.md
+            - map_manager/SaveFloor: srv/save_floor.md
+        - 复合地图:
+            - map_manager/LoadCompositeMap: srv/load_composite_map.md
+            - map_manager/SaveCompositeMap: srv/save_composite_map.md
+            - map_manager/ClearCompositeMap: srv/clear_composite_map.md
+        - POI 管理:
+            - map_manager/AddPOI: srv/add_poi.md
+            - map_manager/RemovePOI: srv/remove_poi.md
+            - map_manager/RemoveAllPOIs: srv/remove_all_pois.md
+            - map_manager/UpdatePOI: srv/update_poi.md
+            - map_manager/GetPOI: srv/get_poi.md
+            - map_manager/ListPOIs: srv/list_pois.md
+        - 虚拟墙管理:
+            - map_manager/AddVirtualWall: srv/add_virtual_wall.md
+            - map_manager/RemoveVirtualWall: srv/remove_virtual_wall.md
+            - map_manager/RemoveVirtualWalls: srv/remove_virtual_walls.md
+            - map_manager/UpdateVirtualWall: srv/update_virtual_wall.md
+            - map_manager/GetVirtualWall: srv/get_virtual_wall.md
+            - map_manager/ListVirtualWalls: srv/list_virtual_walls.md
+        - 禁区管理:
+            - map_manager/AddForbiddenArea: srv/add_forbidden_area.md
+            - map_manager/RemoveForbiddenArea: srv/remove_forbidden_area.md
+            - map_manager/RemoveForbiddenAreas: srv/remove_forbidden_areas.md
+            - map_manager/RemoveAllForbiddenAreas: srv/remove_all_forbidden_areas.md
+            - map_manager/UpdateForbiddenArea: srv/update_forbidden_area.md
+            - map_manager/GetForbiddenArea: srv/get_forbidden_area.md
+            - map_manager/ListForbiddenAreas: srv/list_forbidden_areas.md
+        - 危险区管理:
+            - map_manager/AddDangerousArea: srv/add_dangerous_area.md
+            - map_manager/RemoveDangerousArea: srv/remove_dangerous_area.md
+            - map_manager/RemoveAllDangerousAreas: srv/remove_all_dangerous_areas.md
+            - map_manager/UpdateDangerousArea: srv/update_dangerous_area.md
+            - map_manager/GetDangerousArea: srv/get_dangerous_area.md
+            - map_manager/ListDangerousAreas: srv/list_dangerous_areas.md
+        - 房间管理:
+            - map_manager/AddRoom: srv/add_room.md
+            - map_manager/RemoveRoom: srv/remove_room.md
+            - map_manager/RemoveAllRooms: srv/remove_all_rooms.md
+            - map_manager/UpdateRoom: srv/update_room.md
+            - map_manager/GetRoom: srv/get_room.md
+            - map_manager/ListRooms: srv/list_rooms.md
+        - 语义对象管理:
+            - map_manager/AddSemanticObject: srv/add_semantic_object.md
+            - map_manager/RemoveSemanticObject: srv/remove_semantic_object.md
+            - map_manager/RemoveAllSemanticObjects: srv/remove_all_semantic_objects.md
+            - map_manager/UpdateSemanticObject: srv/update_semantic_object.md
+            - map_manager/GetSemanticObject: srv/get_semantic_object.md
+            - map_manager/ListSemanticObjects: srv/list_semantic_objects.md
+    - 消息定义:
+        - 定位导航模块:
+            - fourier_msgs/ActionStatus: msg/action_status.md
+            - fourier_msgs/BaseErrorInfo: msg/base_error_info.md
+            - fourier_msgs/BaseEventInfo: msg/base_event_info.md
+            - fourier_msgs/EventsInfo: msg/events_info.md
+            - fourier_msgs/HealthInfo: msg/health_info.md
+            - fourier_msgs/UnifiedCameraData: msg/unified_camera_data.md
+        - 地图管理模块:
+            - map_manager/CompositeMapInfo: msg/composite_map_info.md
+            - map_manager/DangerousArea: msg/dangerous_area.md
+            - map_manager/Floor: msg/floor.md
+            - map_manager/FloorTransition: msg/floor_transition.md
+            - map_manager/ForbiddenArea: msg/forbidden_area.md
+            - map_manager/MapLayer: msg/map_layer.md
+            - map_manager/POI: msg/poi.md
+            - map_manager/Room: msg/room.md
+            - map_manager/SemanticObject: msg/semantic_object.md
+            - map_manager/VirtualWall: msg/virtual_wall.md
+    - 版本维护说明:
+        - version: version.md
+
+theme:
+    name: readthedocs
+    highlightjs: true
+    hljs_languages:
+        - json
+        - cpp
+        - bash
+        - python
