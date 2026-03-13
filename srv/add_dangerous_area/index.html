@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>map_manager/AddDangerousArea - HumanoidNav ROS2 API 文档</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "map_manager/AddDangerousArea";
+        var mkdocs_page_input_path = "srv/add_dangerous_area.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/cpp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> HumanoidNav ROS2 API 文档
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">首页</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../ros_api/">ROS2 接口文档</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">服务定义</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" >定位导航模块</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../set_mode/">fourier_msgs/SetMode</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../load_map/">fourier_msgs/LoadMap</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../save_map/">fourier_msgs/SaveMap</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_current_action/">fourier_msgs/GetCurrentAction</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../cancel_current_action/">fourier_msgs/CancelCurrentAction</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >楼层管理</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../add_floor/">map_manager/AddFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_floor/">map_manager/RemoveFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_floor/">map_manager/UpdateFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_floors/">map_manager/ListFloors</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_current_floor/">map_manager/GetCurrentFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../switch_floor/">map_manager/SwitchFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../clear_floor/">map_manager/ClearFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../load_floor/">map_manager/LoadFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../save_floor/">map_manager/SaveFloor</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >复合地图</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../load_composite_map/">map_manager/LoadCompositeMap</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../save_composite_map/">map_manager/SaveCompositeMap</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../clear_composite_map/">map_manager/ClearCompositeMap</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >POI 管理</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../add_poi/">map_manager/AddPOI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_poi/">map_manager/RemovePOI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_all_pois/">map_manager/RemoveAllPOIs</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_poi/">map_manager/UpdatePOI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_poi/">map_manager/GetPOI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_pois/">map_manager/ListPOIs</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >虚拟墙管理</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../add_virtual_wall/">map_manager/AddVirtualWall</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_virtual_wall/">map_manager/RemoveVirtualWall</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_virtual_walls/">map_manager/RemoveVirtualWalls</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_virtual_wall/">map_manager/UpdateVirtualWall</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_virtual_wall/">map_manager/GetVirtualWall</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_virtual_walls/">map_manager/ListVirtualWalls</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >禁区管理</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../add_forbidden_area/">map_manager/AddForbiddenArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_forbidden_area/">map_manager/RemoveForbiddenArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_forbidden_areas/">map_manager/RemoveForbiddenAreas</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_all_forbidden_areas/">map_manager/RemoveAllForbiddenAreas</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_forbidden_area/">map_manager/UpdateForbiddenArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_forbidden_area/">map_manager/GetForbiddenArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_forbidden_areas/">map_manager/ListForbiddenAreas</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >危险区管理</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">map_manager/AddDangerousArea</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#_1">描述</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#request">请求 (Request)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#response">响应 (Response)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_2">使用示例</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#_3">命令行调用</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#python">Python 示例</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#c">C++ 示例</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_4">限速区与禁区对比</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_5">推荐速度限制值</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_6">相关接口</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_dangerous_area/">map_manager/RemoveDangerousArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_all_dangerous_areas/">map_manager/RemoveAllDangerousAreas</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_dangerous_area/">map_manager/UpdateDangerousArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_dangerous_area/">map_manager/GetDangerousArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_dangerous_areas/">map_manager/ListDangerousAreas</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >房间管理</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../add_room/">map_manager/AddRoom</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_room/">map_manager/RemoveRoom</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_all_rooms/">map_manager/RemoveAllRooms</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_room/">map_manager/UpdateRoom</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_room/">map_manager/GetRoom</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_rooms/">map_manager/ListRooms</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >语义对象管理</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../add_semantic_object/">map_manager/AddSemanticObject</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_semantic_object/">map_manager/RemoveSemanticObject</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_all_semantic_objects/">map_manager/RemoveAllSemanticObjects</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_semantic_object/">map_manager/UpdateSemanticObject</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_semantic_object/">map_manager/GetSemanticObject</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_semantic_objects/">map_manager/ListSemanticObjects</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">消息定义</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >定位导航模块</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/action_status/">fourier_msgs/ActionStatus</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/base_error_info/">fourier_msgs/BaseErrorInfo</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/base_event_info/">fourier_msgs/BaseEventInfo</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/events_info/">fourier_msgs/EventsInfo</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/health_info/">fourier_msgs/HealthInfo</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/unified_camera_data/">fourier_msgs/UnifiedCameraData</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >地图管理模块</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/composite_map_info/">map_manager/CompositeMapInfo</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/dangerous_area/">map_manager/DangerousArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/floor/">map_manager/Floor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/floor_transition/">map_manager/FloorTransition</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/forbidden_area/">map_manager/ForbiddenArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/map_layer/">map_manager/MapLayer</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/poi/">map_manager/POI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/room/">map_manager/Room</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/semantic_object/">map_manager/SemanticObject</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/virtual_wall/">map_manager/VirtualWall</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">HumanoidNav ROS2 API 文档</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">服务定义</li>
+          <li class="breadcrumb-item">危险区管理</li>
+      <li class="breadcrumb-item active">map_manager/AddDangerousArea</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="adddangerousarea">AddDangerousArea</h1>
+<p><strong>服务类型</strong>: <code>map_manager/srv/AddDangerousArea</code></p>
+<p><strong>服务名</strong>: <code>/map_manager/add_dangerous_area</code></p>
+<h2 id="_1">描述</h2>
+<p>添加限速区（危险区域）到指定楼层。限速区是一个多边形区域，机器人在此区域内需要降低速度。
+与禁区不同，限速区允许机器人通过，但会限制其最大速度。</p>
+<h2 id="request">请求 (Request)</h2>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>floor_id</td>
+<td>string</td>
+<td>楼层 ID（必需）</td>
+</tr>
+<tr>
+<td>area</td>
+<td>DangerousArea</td>
+<td>限速区数据（必须包含 id, boundary, speed_limit）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="response">响应 (Response)</h2>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>success</td>
+<td>bool</td>
+<td>操作是否成功</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td>结果消息或错误信息</td>
+</tr>
+<tr>
+<td>area_id</td>
+<td>int32</td>
+<td>添加的限速区 ID</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">使用示例</h2>
+<h3 id="_3">命令行调用</h3>
+<pre><code class="language-bash"># 添加矩形限速区，限速 0.5 m/s
+ros2 service call /map_manager/add_dangerous_area map_manager/srv/AddDangerousArea \
+  &quot;{floor_id: 'F1', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 3.0, y: 0.0, z: 0.0}, {x: 3.0, y: 3.0, z: 0.0}, {x: 0.0, y: 3.0, z: 0.0}]}, speed_limit: 0.5}}&quot;
+
+# 添加走廊限速区，限速 0.3 m/s
+ros2 service call /map_manager/add_dangerous_area map_manager/srv/AddDangerousArea \
+  &quot;{floor_id: 'F1', area: {id: 2, boundary: {points: [{x: 10.0, y: 0.0, z: 0.0}, {x: 15.0, y: 0.0, z: 0.0}, {x: 15.0, y: 2.0, z: 0.0}, {x: 10.0, y: 2.0, z: 0.0}]}, speed_limit: 0.3}}&quot;
+</code></pre>
+<h3 id="python">Python 示例</h3>
+<pre><code class="language-python">from map_manager.srv import AddDangerousArea
+from map_manager.msg import DangerousArea
+from geometry_msgs.msg import Polygon, Point32
+import rclpy
+from rclpy.node import Node
+
+class DangerousAreaManager(Node):
+    def __init__(self):
+        super().__init__('dangerous_area_manager')
+        self.client = self.create_client(
+            AddDangerousArea, '/map_manager/add_dangerous_area')
+        self.client.wait_for_service()
+        self.next_id = 1
+
+    def add_area(self, floor_id: str, points: list, speed_limit: float,
+                 area_id: int = None):
+        if area_id is None:
+            area_id = self.next_id
+            self.next_id += 1
+
+        polygon = Polygon(points=[
+            Point32(x=float(p[0]), y=float(p[1]), z=0.0)
+            for p in points
+        ])
+
+        request = AddDangerousArea.Request()
+        request.floor_id = floor_id
+        request.area = DangerousArea(
+            id=area_id,
+            boundary=polygon,
+            speed_limit=speed_limit
+        )
+
+        future = self.client.call_async(request)
+        rclpy.spin_until_future_complete(self, future)
+        result = future.result()
+
+        if result.success:
+            print(f&quot;限速区添加成功: ID={result.area_id}, 限速={speed_limit} m/s&quot;)
+        else:
+            print(f&quot;添加失败: {result.message}&quot;)
+        return result
+
+    def add_rectangle(self, floor_id: str, x1: float, y1: float,
+                      x2: float, y2: float, speed_limit: float,
+                      area_id: int = None):
+        &quot;&quot;&quot;添加矩形限速区&quot;&quot;&quot;
+        points = [(x1, y1), (x2, y1), (x2, y2), (x1, y2)]
+        return self.add_area(floor_id, points, speed_limit, area_id)
+
+rclpy.init()
+manager = DangerousAreaManager()
+
+# 添加矩形限速区（0.5 m/s）
+manager.add_rectangle('F1', 0.0, 0.0, 3.0, 3.0, speed_limit=0.5)
+
+# 添加自定义多边形限速区
+manager.add_area('F1',
+    [(5.0, 5.0), (8.0, 5.0), (8.0, 8.0), (5.0, 8.0)],
+    speed_limit=0.3)
+
+rclpy.shutdown()
+</code></pre>
+<h3 id="c">C++ 示例</h3>
+<pre><code class="language-cpp">#include &lt;rclcpp/rclcpp.hpp&gt;
+#include &lt;map_manager/srv/add_dangerous_area.hpp&gt;
+#include &lt;map_manager/msg/dangerous_area.hpp&gt;
+
+class DangerousAreaManager : public rclcpp::Node {
+public:
+    DangerousAreaManager() : Node(&quot;dangerous_area_manager&quot;), next_id_(1) {
+        client_ = create_client&lt;map_manager::srv::AddDangerousArea&gt;(
+            &quot;/map_manager/add_dangerous_area&quot;);
+        client_-&gt;wait_for_service();
+    }
+
+    bool add_rectangle(const std::string&amp; floor_id,
+                       double x1, double y1, double x2, double y2,
+                       float speed_limit, int area_id = -1) {
+        if (area_id &lt; 0) area_id = next_id_++;
+
+        auto request = std::make_shared&lt;map_manager::srv::AddDangerousArea::Request&gt;();
+        request-&gt;floor_id = floor_id;
+        request-&gt;area.id = area_id;
+        request-&gt;area.speed_limit = speed_limit;
+
+        geometry_msgs::msg::Point32 p1, p2, p3, p4;
+        p1.x = x1; p1.y = y1; p1.z = 0;
+        p2.x = x2; p2.y = y1; p2.z = 0;
+        p3.x = x2; p3.y = y2; p3.z = 0;
+        p4.x = x1; p4.y = y2; p4.z = 0;
+
+        request-&gt;area.boundary.points = {p1, p2, p3, p4};
+
+        auto future = client_-&gt;async_send_request(request);
+        if (rclcpp::spin_until_future_complete(shared_from_this(), future) ==
+            rclcpp::FutureReturnCode::SUCCESS) {
+            auto result = future.get();
+            RCLCPP_INFO(get_logger(), &quot;限速区 %s: ID=%d, 限速=%.2f m/s&quot;,
+                result-&gt;success ? &quot;添加成功&quot; : &quot;添加失败&quot;,
+                result-&gt;area_id, speed_limit);
+            return result-&gt;success;
+        }
+        return false;
+    }
+
+private:
+    rclcpp::Client&lt;map_manager::srv::AddDangerousArea&gt;::SharedPtr client_;
+    int next_id_;
+};
+</code></pre>
+<h2 id="_4">限速区与禁区对比</h2>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>禁区 (ForbiddenArea)</th>
+<th>限速区 (DangerousArea)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>机器人可否进入</td>
+<td>不可以</td>
+<td>可以</td>
+</tr>
+<tr>
+<td>Costmap 效果</td>
+<td>致命障碍物 (LETHAL)</td>
+<td>高代价（可通行）</td>
+</tr>
+<tr>
+<td>速度限制</td>
+<td>N/A</td>
+<td>可配置</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>危险区域、禁止通行</td>
+<td>人员密集区、狭窄通道</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_5">推荐速度限制值</h2>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐限速 (m/s)</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人员密集区</td>
+<td>0.3</td>
+<td>安全优先</td>
+</tr>
+<tr>
+<td>狭窄走廊</td>
+<td>0.5</td>
+<td>避免碰撞</td>
+</tr>
+<tr>
+<td>门口区域</td>
+<td>0.4</td>
+<td>开门安全</td>
+</tr>
+<tr>
+<td>坡道区域</td>
+<td>0.3</td>
+<td>防止失控</td>
+</tr>
+<tr>
+<td>玻璃门前</td>
+<td>0.2</td>
+<td>传感器盲区</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_6">相关接口</h2>
+<ul>
+<li><a href="../list_dangerous_areas/">ListDangerousAreas</a> - 列出限速区</li>
+<li><a href="../get_dangerous_area/">GetDangerousArea</a> - 获取限速区</li>
+<li><a href="../update_dangerous_area/">UpdateDangerousArea</a> - 更新限速区</li>
+<li><a href="../remove_dangerous_area/">RemoveDangerousArea</a> - 删除限速区</li>
+<li><a href="../../msg/dangerous_area/">DangerousArea</a> - 限速区消息定义</li>
+<li><a href="../add_forbidden_area/">AddForbiddenArea</a> - 添加禁区</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../list_forbidden_areas/" class="btn btn-neutral float-left" title="map_manager/ListForbiddenAreas"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../remove_dangerous_area/" class="btn btn-neutral float-right" title="map_manager/RemoveDangerousArea">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../list_forbidden_areas/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../remove_dangerous_area/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>map_manager/AddVirtualWall - HumanoidNav ROS2 API 文档</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "map_manager/AddVirtualWall";
+        var mkdocs_page_input_path = "srv/add_virtual_wall.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/json.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/cpp.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> HumanoidNav ROS2 API 文档
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">首页</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../ros_api/">ROS2 接口文档</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">服务定义</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" >定位导航模块</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../set_mode/">fourier_msgs/SetMode</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../load_map/">fourier_msgs/LoadMap</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../save_map/">fourier_msgs/SaveMap</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_current_action/">fourier_msgs/GetCurrentAction</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../cancel_current_action/">fourier_msgs/CancelCurrentAction</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >楼层管理</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../add_floor/">map_manager/AddFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_floor/">map_manager/RemoveFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_floor/">map_manager/UpdateFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_floors/">map_manager/ListFloors</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_current_floor/">map_manager/GetCurrentFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../switch_floor/">map_manager/SwitchFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../clear_floor/">map_manager/ClearFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../load_floor/">map_manager/LoadFloor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../save_floor/">map_manager/SaveFloor</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >复合地图</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../load_composite_map/">map_manager/LoadCompositeMap</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../save_composite_map/">map_manager/SaveCompositeMap</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../clear_composite_map/">map_manager/ClearCompositeMap</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >POI 管理</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../add_poi/">map_manager/AddPOI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_poi/">map_manager/RemovePOI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_all_pois/">map_manager/RemoveAllPOIs</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_poi/">map_manager/UpdatePOI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_poi/">map_manager/GetPOI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_pois/">map_manager/ListPOIs</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >虚拟墙管理</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">map_manager/AddVirtualWall</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#_1">描述</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#request">请求 (Request)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#response">响应 (Response)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_2">使用示例</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#_3">命令行调用</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#python">Python 示例</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#c">C++ 示例</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#costmap">Costmap 效果</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_4">相关接口</a>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_virtual_wall/">map_manager/RemoveVirtualWall</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_virtual_walls/">map_manager/RemoveVirtualWalls</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_virtual_wall/">map_manager/UpdateVirtualWall</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_virtual_wall/">map_manager/GetVirtualWall</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_virtual_walls/">map_manager/ListVirtualWalls</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >禁区管理</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../add_forbidden_area/">map_manager/AddForbiddenArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_forbidden_area/">map_manager/RemoveForbiddenArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_forbidden_areas/">map_manager/RemoveForbiddenAreas</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_all_forbidden_areas/">map_manager/RemoveAllForbiddenAreas</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_forbidden_area/">map_manager/UpdateForbiddenArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_forbidden_area/">map_manager/GetForbiddenArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_forbidden_areas/">map_manager/ListForbiddenAreas</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >危险区管理</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../add_dangerous_area/">map_manager/AddDangerousArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_dangerous_area/">map_manager/RemoveDangerousArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_all_dangerous_areas/">map_manager/RemoveAllDangerousAreas</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_dangerous_area/">map_manager/UpdateDangerousArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_dangerous_area/">map_manager/GetDangerousArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_dangerous_areas/">map_manager/ListDangerousAreas</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >房间管理</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../add_room/">map_manager/AddRoom</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_room/">map_manager/RemoveRoom</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_all_rooms/">map_manager/RemoveAllRooms</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_room/">map_manager/UpdateRoom</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_room/">map_manager/GetRoom</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_rooms/">map_manager/ListRooms</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >语义对象管理</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../add_semantic_object/">map_manager/AddSemanticObject</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_semantic_object/">map_manager/RemoveSemanticObject</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../remove_all_semantic_objects/">map_manager/RemoveAllSemanticObjects</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../update_semantic_object/">map_manager/UpdateSemanticObject</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../get_semantic_object/">map_manager/GetSemanticObject</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../list_semantic_objects/">map_manager/ListSemanticObjects</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">消息定义</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >定位导航模块</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/action_status/">fourier_msgs/ActionStatus</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/base_error_info/">fourier_msgs/BaseErrorInfo</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/base_event_info/">fourier_msgs/BaseEventInfo</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/events_info/">fourier_msgs/EventsInfo</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/health_info/">fourier_msgs/HealthInfo</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/unified_camera_data/">fourier_msgs/UnifiedCameraData</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >地图管理模块</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/composite_map_info/">map_manager/CompositeMapInfo</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/dangerous_area/">map_manager/DangerousArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/floor/">map_manager/Floor</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/floor_transition/">map_manager/FloorTransition</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/forbidden_area/">map_manager/ForbiddenArea</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/map_layer/">map_manager/MapLayer</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/poi/">map_manager/POI</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/room/">map_manager/Room</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/semantic_object/">map_manager/SemanticObject</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../../msg/virtual_wall/">map_manager/VirtualWall</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">HumanoidNav ROS2 API 文档</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">服务定义</li>
+          <li class="breadcrumb-item">虚拟墙管理</li>
+      <li class="breadcrumb-item active">map_manager/AddVirtualWall</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="addvirtualwall">AddVirtualWall</h1>
+<p><strong>服务类型</strong>: <code>map_manager/srv/AddVirtualWall</code></p>
+<p><strong>服务名</strong>: <code>/map_manager/add_virtual_wall</code></p>
+<h2 id="_1">描述</h2>
+<p>添加虚拟墙到指定楼层。虚拟墙是一条线段，机器人无法穿越。
+虚拟墙会被添加到 costmap 中作为致命障碍物。</p>
+<h2 id="request">请求 (Request)</h2>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>floor_id</td>
+<td>string</td>
+<td>楼层 ID（如果为空，使用 wall.floor_id）</td>
+</tr>
+<tr>
+<td>wall</td>
+<td>VirtualWall</td>
+<td>虚拟墙数据（必须包含 id）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="response">响应 (Response)</h2>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>success</td>
+<td>bool</td>
+<td>操作是否成功</td>
+</tr>
+<tr>
+<td>message</td>
+<td>string</td>
+<td>结果消息或错误信息</td>
+</tr>
+<tr>
+<td>wall_id</td>
+<td>int32</td>
+<td>添加的虚拟墙 ID</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">使用示例</h2>
+<h3 id="_3">命令行调用</h3>
+<pre><code class="language-bash"># 添加水平虚拟墙
+ros2 service call /map_manager/add_virtual_wall map_manager/srv/AddVirtualWall \
+  &quot;{floor_id: 'F1', wall: {id: 1, start: {x: 0.0, y: 5.0, z: 0.0}, end: {x: 10.0, y: 5.0, z: 0.0}}}&quot;
+
+# 添加垂直虚拟墙
+ros2 service call /map_manager/add_virtual_wall map_manager/srv/AddVirtualWall \
+  &quot;{floor_id: 'F1', wall: {id: 2, start: {x: 5.0, y: 0.0, z: 0.0}, end: {x: 5.0, y: 8.0, z: 0.0}}}&quot;
+
+# 添加斜向虚拟墙
+ros2 service call /map_manager/add_virtual_wall map_manager/srv/AddVirtualWall \
+  &quot;{floor_id: 'F1', wall: {id: 3, start: {x: 0.0, y: 0.0, z: 0.0}, end: {x: 5.0, y: 5.0, z: 0.0}}}&quot;
+</code></pre>
+<h3 id="python">Python 示例</h3>
+<pre><code class="language-python">from map_manager.srv import AddVirtualWall
+from map_manager.msg import VirtualWall
+from geometry_msgs.msg import Point
+import rclpy
+from rclpy.node import Node
+
+class VirtualWallManager(Node):
+    def __init__(self):
+        super().__init__('virtual_wall_manager')
+        self.client = self.create_client(AddVirtualWall, '/map_manager/add_virtual_wall')
+        self.client.wait_for_service()
+        self.next_id = 1
+
+    def add_wall(self, floor_id: str, start: tuple, end: tuple, wall_id: int = None):
+        if wall_id is None:
+            wall_id = self.next_id
+            self.next_id += 1
+
+        request = AddVirtualWall.Request()
+        request.floor_id = floor_id
+        request.wall = VirtualWall(
+            id=wall_id,
+            floor_id=floor_id,
+            start=Point(x=start[0], y=start[1], z=start[2] if len(start) &gt; 2 else 0.0),
+            end=Point(x=end[0], y=end[1], z=end[2] if len(end) &gt; 2 else 0.0)
+        )
+
+        future = self.client.call_async(request)
+        rclpy.spin_until_future_complete(self, future)
+        result = future.result()
+
+        if result.success:
+            print(f&quot;虚拟墙添加成功: ID={result.wall_id}&quot;)
+        else:
+            print(f&quot;添加失败: {result.message}&quot;)
+        return result
+
+rclpy.init()
+manager = VirtualWallManager()
+
+# 添加围栏（4条虚拟墙围成矩形）
+manager.add_wall('F1', (0, 0), (10, 0))   # 底边
+manager.add_wall('F1', (10, 0), (10, 8))  # 右边
+manager.add_wall('F1', (10, 8), (0, 8))   # 顶边
+manager.add_wall('F1', (0, 8), (0, 0))    # 左边
+
+rclpy.shutdown()
+</code></pre>
+<h3 id="c">C++ 示例</h3>
+<pre><code class="language-cpp">#include &lt;rclcpp/rclcpp.hpp&gt;
+#include &lt;map_manager/srv/add_virtual_wall.hpp&gt;
+#include &lt;map_manager/msg/virtual_wall.hpp&gt;
+
+class VirtualWallManager : public rclcpp::Node {
+public:
+    VirtualWallManager() : Node(&quot;virtual_wall_manager&quot;), next_id_(1) {
+        client_ = create_client&lt;map_manager::srv::AddVirtualWall&gt;(
+            &quot;/map_manager/add_virtual_wall&quot;);
+        client_-&gt;wait_for_service();
+    }
+
+    bool add_wall(const std::string&amp; floor_id,
+                  double x1, double y1, double x2, double y2,
+                  int wall_id = -1) {
+        if (wall_id &lt; 0) wall_id = next_id_++;
+
+        auto request = std::make_shared&lt;map_manager::srv::AddVirtualWall::Request&gt;();
+        request-&gt;floor_id = floor_id;
+        request-&gt;wall.id = wall_id;
+        request-&gt;wall.floor_id = floor_id;
+        request-&gt;wall.start.x = x1;
+        request-&gt;wall.start.y = y1;
+        request-&gt;wall.start.z = 0;
+        request-&gt;wall.end.x = x2;
+        request-&gt;wall.end.y = y2;
+        request-&gt;wall.end.z = 0;
+
+        auto future = client_-&gt;async_send_request(request);
+        if (rclcpp::spin_until_future_complete(shared_from_this(), future) ==
+            rclcpp::FutureReturnCode::SUCCESS) {
+            auto result = future.get();
+            RCLCPP_INFO(get_logger(), &quot;虚拟墙 %s: ID=%d&quot;,
+                result-&gt;success ? &quot;添加成功&quot; : &quot;添加失败&quot;, result-&gt;wall_id);
+            return result-&gt;success;
+        }
+        return false;
+    }
+
+private:
+    rclcpp::Client&lt;map_manager::srv::AddVirtualWall&gt;::SharedPtr client_;
+    int next_id_;
+};
+</code></pre>
+<h2 id="costmap">Costmap 效果</h2>
+<p>虚拟墙在 costmap 中被标记为致命障碍物：</p>
+<pre><code>      虚拟墙线段
+    ━━━━━━━━━━━
+    ▓▓▓▓▓▓▓▓▓▓▓   ← 致命障碍物 (254)
+   ░░░░░░░░░░░░░  ← 膨胀区域
+</code></pre>
+<h2 id="_4">相关接口</h2>
+<ul>
+<li><a href="../list_virtual_walls/">ListVirtualWalls</a> - 列出虚拟墙</li>
+<li><a href="../get_virtual_wall/">GetVirtualWall</a> - 获取虚拟墙</li>
+<li><a href="../update_virtual_wall/">UpdateVirtualWall</a> - 更新虚拟墙</li>
+<li><a href="../remove_virtual_wall/">RemoveVirtualWall</a> - 删除虚拟墙</li>
+<li><a href="../../msg/virtual_wall/">VirtualWall</a> - 虚拟墙消息定义</li>
+<li><a href="../add_forbidden_area/">AddForbiddenArea</a> - 添加禁区（多边形，自动生成虚拟墙）</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../list_pois/" class="btn btn-neutral float-left" title="map_manager/ListPOIs"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../remove_virtual_wall/" class="btn btn-neutral float-right" title="map_manager/RemoveVirtualWall">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../list_pois/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../remove_virtual_wall/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
