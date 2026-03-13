@@ -1523,7 +1523,7 @@ private:
 ros2 topic echo /Humanoid_nav/events
 ```
 
-事件类型定义详见 [BaseEventInfo](msg/base_event_info.md)。
+完整的事件类型列表和详细说明请参见 [BaseEventInfo](msg/base_event_info.md)。
 
 ### 8.2 Python 订阅示例
 
@@ -1549,6 +1549,10 @@ class EventsSubscriber(Node):
                 print("警告: 检测到近处障碍物")
             elif event.event_type == "out_of_map":
                 print("警告: 机器人走出地图边界或进入未知区域")
+            elif event.event_type == "enter_forbidden_area":
+                print("警告: 机器人进入禁区")
+            elif event.event_type == "enter_dangerous_area":
+                print("警告: 机器人进入危险区域（限速区）")
             elif event.event_type == "map_loop_closure":
                 print("信息: 检测到闭环，地图已优化")
 
@@ -1581,6 +1585,10 @@ public:
                         RCLCPP_WARN(get_logger(), "检测到近处障碍物");
                     } else if (event.event_type == "out_of_map") {
                         RCLCPP_WARN(get_logger(), "机器人走出地图边界或进入未知区域");
+                    } else if (event.event_type == "enter_forbidden_area") {
+                        RCLCPP_WARN(get_logger(), "机器人进入禁区");
+                    } else if (event.event_type == "enter_dangerous_area") {
+                        RCLCPP_WARN(get_logger(), "机器人进入危险区域（限速区）");
                     }
                 }
             });
@@ -1768,9 +1776,9 @@ ros2 launch map_manager map_manager.launch.py namespace:=robot1 use_namespace:=t
 
 ### 9.2 复合地图管理服务
 
-> **命名空间说明**: 以下所有服务路径均为无命名空间形式（`/map_manager/xxx`）。使用命名空间时路径变为 `/<namespace>/map_manager/xxx`。命令行示例中建议使用 `${MM}` 变量。
+> **命名空间说明**: 以下所有服务路径均为无命名空间形式（`/xxx`）。使用命名空间时路径变为 `/<namespace>/xxx`。命令行示例中建议使用 `${MM}` 变量。
 
-#### 9.2.1 /map_manager/load_composite_map (服务)
+#### 9.2.1 /load_composite_map (服务)
 
 > 加载复合地图（支持 .mmap 压缩包和目录格式）
 
@@ -1810,7 +1818,7 @@ from rclpy.node import Node
 class MapLoader(Node):
     def __init__(self):
         super().__init__('map_loader')
-        self.client = self.create_client(LoadCompositeMap, '/map_manager/load_composite_map')
+        self.client = self.create_client(LoadCompositeMap, '/load_composite_map')
         self.client.wait_for_service()
 
     def load(self, path: str):
@@ -1829,7 +1837,7 @@ loader = MapLoader()
 loader.load('/opt/fftai/Navigation/Map/office')
 ```
 
-#### 9.2.2 /map_manager/save_composite_map (服务)
+#### 9.2.2 /save_composite_map (服务)
 
 > 保存复合地图（支持压缩和目录格式）
 
@@ -1865,7 +1873,7 @@ ros2 service call ${MM}/save_composite_map map_manager/srv/SaveCompositeMap \
   "{map_path: '/opt/fftai/Navigation/Map/my_map.mmap'}"
 ```
 
-#### 9.2.3 /map_manager/clear_composite_map (服务)
+#### 9.2.3 /clear_composite_map (服务)
 
 > 清除当前加载的复合地图
 
@@ -1875,7 +1883,7 @@ ros2 service call ${MM}/save_composite_map map_manager/srv/SaveCompositeMap \
 
 ### 9.3 楼层管理服务
 
-#### 9.3.1 /map_manager/list_floors (服务)
+#### 9.3.1 /list_floors (服务)
 
 > 列出所有楼层
 
@@ -1903,7 +1911,7 @@ from rclpy.node import Node
 class FloorLister(Node):
     def __init__(self):
         super().__init__('floor_lister')
-        self.client = self.create_client(ListFloors, '/map_manager/list_floors')
+        self.client = self.create_client(ListFloors, '/list_floors')
         self.client.wait_for_service()
     
     def list_floors(self):
@@ -1933,7 +1941,7 @@ lister.list_floors()
 class FloorLister : public rclcpp::Node {
 public:
     FloorLister() : Node("floor_lister") {
-        client_ = create_client<map_manager::srv::ListFloors>("/map_manager/list_floors");
+        client_ = create_client<map_manager::srv::ListFloors>("/list_floors");
         client_->wait_for_service();
     }
     
@@ -1964,7 +1972,7 @@ private:
 };
 ```
 
-#### 9.3.2 /map_manager/get_current_floor (服务)
+#### 9.3.2 /get_current_floor (服务)
 
 > 获取当前楼层
 
@@ -1994,7 +2002,7 @@ from rclpy.node import Node
 class CurrentFloorGetter(Node):
     def __init__(self):
         super().__init__('current_floor_getter')
-        self.client = self.create_client(GetCurrentFloor, '/map_manager/get_current_floor')
+        self.client = self.create_client(GetCurrentFloor, '/get_current_floor')
         self.client.wait_for_service()
     
     def get_current_floor(self):
@@ -2024,7 +2032,7 @@ class CurrentFloorGetter : public rclcpp::Node {
 public:
     CurrentFloorGetter() : Node("current_floor_getter") {
         client_ = create_client<map_manager::srv::GetCurrentFloor>(
-            "/map_manager/get_current_floor");
+            "/get_current_floor");
         client_->wait_for_service();
     }
     
@@ -2050,7 +2058,7 @@ private:
 };
 ```
 
-#### 9.3.3 /map_manager/switch_floor (服务)
+#### 9.3.3 /switch_floor (服务)
 
 > 切换到指定楼层
 
@@ -2084,7 +2092,7 @@ ros2 service call ${MM}/switch_floor map_manager/srv/SwitchFloor \
   "{floor_id: 'F2', use_transition: true, transition_id: 'elevator_1'}"
 ```
 
-#### 9.3.4 /map_manager/add_floor (服务)
+#### 9.3.4 /add_floor (服务)
 
 > 添加新楼层
 
@@ -2120,7 +2128,7 @@ from rclpy.node import Node
 class FloorManager(Node):
     def __init__(self):
         super().__init__('floor_manager')
-        self.client = self.create_client(AddFloor, '/map_manager/add_floor')
+        self.client = self.create_client(AddFloor, '/add_floor')
         self.client.wait_for_service()
     
     def add_floor(self, floor_id: str, name: str, level: int,
@@ -2159,7 +2167,7 @@ manager.add_floor('2F', 'Second Floor', 2, 3.0, 6.0)
 class FloorManager : public rclcpp::Node {
 public:
     FloorManager() : Node("floor_manager") {
-        client_ = create_client<map_manager::srv::AddFloor>("/map_manager/add_floor");
+        client_ = create_client<map_manager::srv::AddFloor>("/add_floor");
         client_->wait_for_service();
     }
     
@@ -2192,7 +2200,7 @@ private:
 };
 ```
 
-#### 9.3.5 /map_manager/remove_floor (服务)
+#### 9.3.5 /remove_floor (服务)
 
 > 删除楼层
 
@@ -2226,7 +2234,7 @@ from rclpy.node import Node
 class FloorRemover(Node):
     def __init__(self):
         super().__init__('floor_remover')
-        self.client = self.create_client(RemoveFloor, '/map_manager/remove_floor')
+        self.client = self.create_client(RemoveFloor, '/remove_floor')
         self.client.wait_for_service()
     
     def remove_floor(self, floor_id: str):
@@ -2250,7 +2258,7 @@ remover.remove_floor('2F')
 class FloorRemover : public rclcpp::Node {
 public:
     FloorRemover() : Node("floor_remover") {
-        client_ = create_client<map_manager::srv::RemoveFloor>("/map_manager/remove_floor");
+        client_ = create_client<map_manager::srv::RemoveFloor>("/remove_floor");
         client_->wait_for_service();
     }
     
@@ -2271,7 +2279,7 @@ private:
 };
 ```
 
-#### 9.3.6 /map_manager/save_floor (服务)
+#### 9.3.6 /save_floor (服务)
 
 > 保存当前楼层数据
 
@@ -2309,7 +2317,7 @@ from rclpy.node import Node
 class FloorSaver(Node):
     def __init__(self):
         super().__init__('floor_saver')
-        self.client = self.create_client(SaveFloor, '/map_manager/save_floor')
+        self.client = self.create_client(SaveFloor, '/save_floor')
         self.client.wait_for_service()
     
     def save_floor(self, floor_id: str = ''):
@@ -2340,7 +2348,7 @@ saver.save_floor('1F')  # 保存 1F 楼层
 class FloorSaver : public rclcpp::Node {
 public:
     FloorSaver() : Node("floor_saver") {
-        client_ = create_client<map_manager::srv::SaveFloor>("/map_manager/save_floor");
+        client_ = create_client<map_manager::srv::SaveFloor>("/save_floor");
         client_->wait_for_service();
     }
     
@@ -2367,7 +2375,7 @@ private:
 };
 ```
 
-#### 9.3.7 /map_manager/load_floor (服务)
+#### 9.3.7 /load_floor (服务)
 
 > 从磁盘加载楼层数据（包含导航、定位、语义、虚拟层）。若楼层已存在则替换。
 
@@ -2403,7 +2411,7 @@ from rclpy.node import Node
 class FloorLoader(Node):
     def __init__(self):
         super().__init__('floor_loader')
-        self.client = self.create_client(LoadFloor, '/map_manager/load_floor')
+        self.client = self.create_client(LoadFloor, '/load_floor')
         self.client.wait_for_service()
 
     def load_floor(self, floor_id: str, input_path: str):
@@ -2424,7 +2432,7 @@ loader = FloorLoader()
 loader.load_floor('1F', '/data/composite_map/floors/1F')
 ```
 
-#### 9.3.8 /map_manager/clear_floor (服务)
+#### 9.3.8 /clear_floor (服务)
 
 > 清除指定楼层的所有层数据（保留楼层结构，仅清除数据，与 remove_floor 不同）
 
@@ -2458,7 +2466,7 @@ from rclpy.node import Node
 class FloorClearer(Node):
     def __init__(self):
         super().__init__('floor_clearer')
-        self.client = self.create_client(ClearFloor, '/map_manager/clear_floor')
+        self.client = self.create_client(ClearFloor, '/clear_floor')
         self.client.wait_for_service()
 
     def clear_floor(self, floor_id: str):
@@ -2486,13 +2494,13 @@ clearer.clear_floor('1F')
 
 **QoS**: transient_local, reliable
 
-> **命名空间说明**: 使用命名空间时，话题路径变为 `/<namespace>/map_manager/current_floor`（相对话题，自动跟随节点命名空间）。
+> **命名空间说明**: 使用命名空间时，话题路径变为 `/<namespace>/current_floor`（相对话题，自动跟随节点命名空间）。
 
 ---
 
 ### 9.4 POI 管理服务
 
-#### 9.4.1 /map_manager/add_poi (服务)
+#### 9.4.1 /add_poi (服务)
 
 > 添加 POI
 
@@ -2528,7 +2536,7 @@ from rclpy.node import Node
 class POIManager(Node):
     def __init__(self):
         super().__init__('poi_manager')
-        self.client = self.create_client(AddPOI, '/map_manager/add_poi')
+        self.client = self.create_client(AddPOI, '/add_poi')
         self.client.wait_for_service()
     
     def add_poi(self, poi_id: str, name: str, poi_type: str, 
@@ -2563,7 +2571,7 @@ print(f"POI added: {success}")
 class POIManager : public rclcpp::Node {
 public:
     POIManager() : Node("poi_manager") {
-        client_ = create_client<map_manager::srv::AddPOI>("/map_manager/add_poi");
+        client_ = create_client<map_manager::srv::AddPOI>("/add_poi");
         client_->wait_for_service();
     }
     
@@ -2594,7 +2602,7 @@ private:
 };
 ```
 
-#### 9.4.2 /map_manager/list_pois (服务)
+#### 9.4.2 /list_pois (服务)
 
 > 列出 POI
 
@@ -2632,7 +2640,7 @@ from rclpy.node import Node
 class POILister(Node):
     def __init__(self):
         super().__init__('poi_lister')
-        self.client = self.create_client(ListPOIs, '/map_manager/list_pois')
+        self.client = self.create_client(ListPOIs, '/list_pois')
         self.client.wait_for_service()
     
     def list_pois(self, floor_id: str = ''):
@@ -2665,7 +2673,7 @@ lister.list_pois('F1')  # 列出 F1 的 POI
 class POILister : public rclcpp::Node {
 public:
     POILister() : Node("poi_lister") {
-        client_ = create_client<map_manager::srv::ListPOIs>("/map_manager/list_pois");
+        client_ = create_client<map_manager::srv::ListPOIs>("/list_pois");
         client_->wait_for_service();
     }
     
@@ -2694,7 +2702,7 @@ private:
 };
 ```
 
-#### 9.4.3 /map_manager/get_poi (服务)
+#### 9.4.3 /get_poi (服务)
 
 > 获取单个 POI
 
@@ -2721,7 +2729,7 @@ ros2 service call ${MM}/get_poi map_manager/srv/GetPOI \
   "{floor_id: 'F1', id: 'charging_1'}"
 ```
 
-#### 9.4.4 /map_manager/update_poi (服务)
+#### 9.4.4 /update_poi (服务)
 
 > 更新 POI
 
@@ -2746,7 +2754,7 @@ ros2 service call ${MM}/update_poi map_manager/srv/UpdatePOI \
   "{poi: {id: 'charging_1', name: 'Main Charger', type: 'charging_station', floor_id: 'F1', pose: {x: 5.5, y: 3.0, theta: 1.57}}}"
 ```
 
-#### 9.4.5 /map_manager/remove_poi (服务)
+#### 9.4.5 /remove_poi (服务)
 
 > 删除 POI
 
@@ -2772,7 +2780,7 @@ ros2 service call ${MM}/remove_poi map_manager/srv/RemovePOI \
   "{floor_id: 'F1', id: 'charging_1'}"
 ```
 
-#### 9.4.6 /map_manager/remove_all_pois (服务)
+#### 9.4.6 /remove_all_pois (服务)
 
 > 删除所有 POI
 
@@ -2801,7 +2809,7 @@ ros2 service call ${MM}/remove_all_pois map_manager/srv/RemoveAllPOIs \
 
 ### 9.5 虚拟墙管理服务
 
-#### 9.5.1 /map_manager/add_virtual_wall (服务)
+#### 9.5.1 /add_virtual_wall (服务)
 
 > 添加虚拟墙
 
@@ -2839,7 +2847,7 @@ from rclpy.node import Node
 class VirtualWallManager(Node):
     def __init__(self):
         super().__init__('virtual_wall_manager')
-        self.client = self.create_client(AddVirtualWall, '/map_manager/add_virtual_wall')
+        self.client = self.create_client(AddVirtualWall, '/add_virtual_wall')
         self.client.wait_for_service()
     
     def add_wall(self, floor_id: str, wall_id: int, 
@@ -2880,7 +2888,7 @@ class VirtualWallManager : public rclcpp::Node {
 public:
     VirtualWallManager() : Node("virtual_wall_manager") {
         client_ = create_client<map_manager::srv::AddVirtualWall>(
-            "/map_manager/add_virtual_wall");
+            "/add_virtual_wall");
         client_->wait_for_service();
     }
     
@@ -2917,7 +2925,7 @@ private:
 };
 ```
 
-#### 9.5.2 /map_manager/list_virtual_walls (服务)
+#### 9.5.2 /list_virtual_walls (服务)
 
 > 列出虚拟墙
 
@@ -2955,7 +2963,7 @@ from rclpy.node import Node
 class VirtualWallLister(Node):
     def __init__(self):
         super().__init__('virtual_wall_lister')
-        self.client = self.create_client(ListVirtualWalls, '/map_manager/list_virtual_walls')
+        self.client = self.create_client(ListVirtualWalls, '/list_virtual_walls')
         self.client.wait_for_service()
     
     def list_walls(self, floor_id: str = ''):
@@ -2987,7 +2995,7 @@ class VirtualWallLister : public rclcpp::Node {
 public:
     VirtualWallLister() : Node("virtual_wall_lister") {
         client_ = create_client<map_manager::srv::ListVirtualWalls>(
-            "/map_manager/list_virtual_walls");
+            "/list_virtual_walls");
         client_->wait_for_service();
     }
     
@@ -3016,7 +3024,7 @@ private:
 };
 ```
 
-#### 9.5.3 /map_manager/get_virtual_wall (服务)
+#### 9.5.3 /get_virtual_wall (服务)
 
 > 获取单条虚拟墙
 
@@ -3043,7 +3051,7 @@ ros2 service call ${MM}/get_virtual_wall map_manager/srv/GetVirtualWall \
   "{floor_id: 'F1', id: 1}"
 ```
 
-#### 9.5.4 /map_manager/update_virtual_wall (服务)
+#### 9.5.4 /update_virtual_wall (服务)
 
 > 更新虚拟墙
 
@@ -3068,7 +3076,7 @@ ros2 service call ${MM}/update_virtual_wall map_manager/srv/UpdateVirtualWall \
   "{wall: {id: 1, floor_id: 'F1', start: {x: 0.0, y: 0.0, z: 0.0}, end: {x: 3.0, y: 0.0, z: 0.0}}}"
 ```
 
-#### 9.5.5 /map_manager/remove_virtual_wall (服务)
+#### 9.5.5 /remove_virtual_wall (服务)
 
 > 删除单条虚拟墙
 
@@ -3094,7 +3102,7 @@ ros2 service call ${MM}/remove_virtual_wall map_manager/srv/RemoveVirtualWall \
   "{floor_id: 'F1', wall_id: 1}"
 ```
 
-#### 9.5.6 /map_manager/remove_virtual_walls (服务)
+#### 9.5.6 /remove_virtual_walls (服务)
 
 > 批量删除虚拟墙（删除指定楼层所有虚拟墙）
 
@@ -3124,7 +3132,7 @@ ros2 service call ${MM}/remove_virtual_walls map_manager/srv/RemoveVirtualWalls 
 
 ### 9.6 禁区管理服务
 
-#### 9.6.1 /map_manager/add_forbidden_area (服务)
+#### 9.6.1 /add_forbidden_area (服务)
 
 > 添加禁区（多边形区域）
 
@@ -3164,7 +3172,7 @@ from rclpy.node import Node
 class ForbiddenAreaManager(Node):
     def __init__(self):
         super().__init__('forbidden_area_manager')
-        self.client = self.create_client(AddForbiddenArea, '/map_manager/add_forbidden_area')
+        self.client = self.create_client(AddForbiddenArea, '/add_forbidden_area')
         self.client.wait_for_service()
     
     def add_forbidden_area(self, floor_id: str, area_id: int, points: list):
@@ -3211,7 +3219,7 @@ class ForbiddenAreaManager : public rclcpp::Node {
 public:
     ForbiddenAreaManager() : Node("forbidden_area_manager") {
         client_ = create_client<map_manager::srv::AddForbiddenArea>(
-            "/map_manager/add_forbidden_area");
+            "/add_forbidden_area");
         client_->wait_for_service();
     }
     
@@ -3261,7 +3269,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-#### 9.6.2 /map_manager/list_forbidden_areas (服务)
+#### 9.6.2 /list_forbidden_areas (服务)
 
 > 列出禁区
 
@@ -3297,7 +3305,7 @@ from rclpy.node import Node
 class ForbiddenAreaLister(Node):
     def __init__(self):
         super().__init__('forbidden_area_lister')
-        self.client = self.create_client(ListForbiddenAreas, '/map_manager/list_forbidden_areas')
+        self.client = self.create_client(ListForbiddenAreas, '/list_forbidden_areas')
         self.client.wait_for_service()
     
     def list_areas(self, floor_id: str = ''):
@@ -3332,7 +3340,7 @@ class ForbiddenAreaLister : public rclcpp::Node {
 public:
     ForbiddenAreaLister() : Node("forbidden_area_lister") {
         client_ = create_client<map_manager::srv::ListForbiddenAreas>(
-            "/map_manager/list_forbidden_areas");
+            "/list_forbidden_areas");
         client_->wait_for_service();
     }
     
@@ -3363,7 +3371,7 @@ private:
 };
 ```
 
-#### 9.6.3 /map_manager/get_forbidden_area (服务)
+#### 9.6.3 /get_forbidden_area (服务)
 
 > 获取单个禁区
 
@@ -3391,7 +3399,7 @@ ros2 service call ${MM}/get_forbidden_area map_manager/srv/GetForbiddenArea \
   "{floor_id: 'F1', id: 1}"
 ```
 
-#### 9.6.4 /map_manager/update_forbidden_area (服务)
+#### 9.6.4 /update_forbidden_area (服务)
 
 > 更新禁区
 
@@ -3418,7 +3426,7 @@ ros2 service call ${MM}/update_forbidden_area map_manager/srv/UpdateForbiddenAre
   "{floor_id: 'F1', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 3.0, y: 0.0, z: 0.0}, {x: 3.0, y: 3.0, z: 0.0}, {x: 0.0, y: 3.0, z: 0.0}]}}}"
 ```
 
-#### 9.6.5 /map_manager/remove_forbidden_area (服务)
+#### 9.6.5 /remove_forbidden_area (服务)
 
 > 删除禁区
 
@@ -3445,11 +3453,11 @@ ros2 service call ${MM}/remove_forbidden_area map_manager/srv/RemoveForbiddenAre
   "{floor_id: 'F1', area_id: 1}"
 ```
 
-#### 9.6.6 /map_manager/remove_forbidden_areas (服务)
+#### 9.6.6 /remove_forbidden_areas (服务)
 
 > 批量删除禁区（删除指定楼层所有禁区）
 
-> **注意**: 此服务接口已定义但当前版本未注册。请使用 [8.6.7 /map_manager/remove_all_forbidden_areas](#867-map_managerremove_all_forbidden_areas-服务) 代替，功能相同。
+> **注意**: 此服务接口已定义但当前版本未注册。请使用 [9.6.7 /remove_all_forbidden_areas](#967-remove_all_forbidden_areas-服务) 代替，功能相同。
 
 **服务类型**: `map_manager/srv/RemoveForbiddenAreas`
 
@@ -3473,7 +3481,7 @@ ros2 service call ${MM}/remove_forbidden_areas map_manager/srv/RemoveForbiddenAr
   "{floor_id: 'F1'}"
 ```
 
-#### 9.6.7 /map_manager/remove_all_forbidden_areas (服务)
+#### 9.6.7 /remove_all_forbidden_areas (服务)
 
 > 删除所有禁区（与 remove_forbidden_areas 功能相同）
 
@@ -3497,7 +3505,7 @@ ros2 service call ${MM}/remove_forbidden_areas map_manager/srv/RemoveForbiddenAr
 
 ### 9.7 限速区管理服务
 
-#### 9.7.1 /map_manager/add_dangerous_area (服务)
+#### 9.7.1 /add_dangerous_area (服务)
 
 > 添加限速区
 
@@ -3536,7 +3544,7 @@ from rclpy.node import Node
 class DangerousAreaManager(Node):
     def __init__(self):
         super().__init__('dangerous_area_manager')
-        self.client = self.create_client(AddDangerousArea, '/map_manager/add_dangerous_area')
+        self.client = self.create_client(AddDangerousArea, '/add_dangerous_area')
         self.client.wait_for_service()
     
     def add_dangerous_area(self, floor_id: str, area_id: int, 
@@ -3585,7 +3593,7 @@ class DangerousAreaManager : public rclcpp::Node {
 public:
     DangerousAreaManager() : Node("dangerous_area_manager") {
         client_ = create_client<map_manager::srv::AddDangerousArea>(
-            "/map_manager/add_dangerous_area");
+            "/add_dangerous_area");
         client_->wait_for_service();
     }
     
@@ -3636,7 +3644,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-#### 9.7.2 /map_manager/list_dangerous_areas (服务)
+#### 9.7.2 /list_dangerous_areas (服务)
 
 > 列出限速区
 
@@ -3672,7 +3680,7 @@ from rclpy.node import Node
 class DangerousAreaLister(Node):
     def __init__(self):
         super().__init__('dangerous_area_lister')
-        self.client = self.create_client(ListDangerousAreas, '/map_manager/list_dangerous_areas')
+        self.client = self.create_client(ListDangerousAreas, '/list_dangerous_areas')
         self.client.wait_for_service()
     
     def list_areas(self, floor_id: str = ''):
@@ -3706,7 +3714,7 @@ class DangerousAreaLister : public rclcpp::Node {
 public:
     DangerousAreaLister() : Node("dangerous_area_lister") {
         client_ = create_client<map_manager::srv::ListDangerousAreas>(
-            "/map_manager/list_dangerous_areas");
+            "/list_dangerous_areas");
         client_->wait_for_service();
     }
     
@@ -3739,7 +3747,7 @@ private:
 };
 ```
 
-#### 9.7.3 /map_manager/get_dangerous_area (服务)
+#### 9.7.3 /get_dangerous_area (服务)
 
 > 获取单个限速区
 
@@ -3767,7 +3775,7 @@ ros2 service call ${MM}/get_dangerous_area map_manager/srv/GetDangerousArea \
   "{floor_id: 'F1', id: 1}"
 ```
 
-#### 9.7.4 /map_manager/update_dangerous_area (服务)
+#### 9.7.4 /update_dangerous_area (服务)
 
 > 更新限速区
 
@@ -3793,7 +3801,7 @@ ros2 service call ${MM}/update_dangerous_area map_manager/srv/UpdateDangerousAre
   "{floor_id: 'F1', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 4.0, y: 0.0, z: 0.0}, {x: 4.0, y: 4.0, z: 0.0}, {x: 0.0, y: 4.0, z: 0.0}]}, speed_limit: 0.5}}"
 ```
 
-#### 9.7.5 /map_manager/remove_dangerous_area (服务)
+#### 9.7.5 /remove_dangerous_area (服务)
 
 > 删除限速区
 
@@ -3819,7 +3827,7 @@ ros2 service call ${MM}/remove_dangerous_area map_manager/srv/RemoveDangerousAre
   "{floor_id: 'F1', area_id: 1}"
 ```
 
-#### 9.7.6 /map_manager/remove_all_dangerous_areas (服务)
+#### 9.7.6 /remove_all_dangerous_areas (服务)
 
 > 删除所有限速区
 
@@ -3849,7 +3857,7 @@ ros2 service call ${MM}/remove_all_dangerous_areas map_manager/srv/RemoveAllDang
 
 ### 9.8 房间管理服务
 
-#### 9.8.1 /map_manager/add_room (服务)
+#### 9.8.1 /add_room (服务)
 
 > 添加房间
 
@@ -3887,7 +3895,7 @@ from rclpy.node import Node
 class RoomManager(Node):
     def __init__(self):
         super().__init__('room_manager')
-        self.client = self.create_client(AddRoom, '/map_manager/add_room')
+        self.client = self.create_client(AddRoom, '/add_room')
         self.client.wait_for_service()
     
     def add_room(self, floor_id: str, room_id: str, name: str, 
@@ -3933,7 +3941,7 @@ manager.add_room('F1', 'room_101', 'Office 101', 'office',
 class RoomManager : public rclcpp::Node {
 public:
     RoomManager() : Node("room_manager") {
-        client_ = create_client<map_manager::srv::AddRoom>("/map_manager/add_room");
+        client_ = create_client<map_manager::srv::AddRoom>("/add_room");
         client_->wait_for_service();
     }
     
@@ -3974,7 +3982,7 @@ private:
 };
 ```
 
-#### 9.8.2 /map_manager/list_rooms (服务)
+#### 9.8.2 /list_rooms (服务)
 
 > 列出房间
 
@@ -4000,7 +4008,7 @@ ros2 service call ${MM}/list_rooms map_manager/srv/ListRooms \
   "{floor_id: 'F1'}"
 ```
 
-#### 9.8.3 /map_manager/get_room (服务)
+#### 9.8.3 /get_room (服务)
 
 > 获取房间
 
@@ -4027,7 +4035,7 @@ ros2 service call ${MM}/get_room map_manager/srv/GetRoom \
   "{floor_id: 'F1', id: 'room_101'}"
 ```
 
-#### 9.8.4 /map_manager/update_room (服务)
+#### 9.8.4 /update_room (服务)
 
 > 更新房间
 
@@ -4053,7 +4061,7 @@ ros2 service call ${MM}/update_room map_manager/srv/UpdateRoom \
   "{floor_id: 'F1', room: {id: 'room_101', name: 'Meeting Room 101', type: 'meeting_room', boundary: [{x: 0.0, y: 0.0, z: 0.0}, {x: 6.0, y: 0.0, z: 0.0}, {x: 6.0, y: 5.0, z: 0.0}, {x: 0.0, y: 5.0, z: 0.0}]}}"
 ```
 
-#### 9.8.5 /map_manager/remove_room (服务)
+#### 9.8.5 /remove_room (服务)
 
 > 删除房间
 
@@ -4080,7 +4088,7 @@ ros2 service call ${MM}/remove_room map_manager/srv/RemoveRoom \
   "{floor_id: 'F1', room_id: 'room_101'}"
 ```
 
-#### 9.8.6 /map_manager/remove_all_rooms (服务)
+#### 9.8.6 /remove_all_rooms (服务)
 
 > 删除所有房间
 
@@ -4110,7 +4118,7 @@ ros2 service call ${MM}/remove_all_rooms map_manager/srv/RemoveAllRooms \
 
 ### 9.9 语义对象管理服务
 
-#### 9.9.1 /map_manager/add_semantic_object (服务)
+#### 9.9.1 /add_semantic_object (服务)
 
 > 添加语义对象
 
@@ -4148,7 +4156,7 @@ from rclpy.node import Node
 class SemanticObjectManager(Node):
     def __init__(self):
         super().__init__('semantic_object_manager')
-        self.client = self.create_client(AddSemanticObject, '/map_manager/add_semantic_object')
+        self.client = self.create_client(AddSemanticObject, '/add_semantic_object')
         self.client.wait_for_service()
     
     def add_object(self, floor_id: str, obj_id: str, name: str,
@@ -4194,7 +4202,7 @@ class SemanticObjectManager : public rclcpp::Node {
 public:
     SemanticObjectManager() : Node("semantic_object_manager") {
         client_ = create_client<map_manager::srv::AddSemanticObject>(
-            "/map_manager/add_semantic_object");
+            "/add_semantic_object");
         client_->wait_for_service();
     }
     
@@ -4235,7 +4243,7 @@ private:
 };
 ```
 
-#### 9.9.2 /map_manager/list_semantic_objects (服务)
+#### 9.9.2 /list_semantic_objects (服务)
 
 > 列出语义对象
 
@@ -4262,7 +4270,7 @@ ros2 service call ${MM}/list_semantic_objects map_manager/srv/ListSemanticObject
   "{floor_id: 'F1', object_type: 'desk'}"
 ```
 
-#### 9.9.3 /map_manager/get_semantic_object (服务)
+#### 9.9.3 /get_semantic_object (服务)
 
 > 获取语义对象
 
@@ -4289,7 +4297,7 @@ ros2 service call ${MM}/get_semantic_object map_manager/srv/GetSemanticObject \
   "{floor_id: 'F1', id: 'desk_001'}"
 ```
 
-#### 9.9.4 /map_manager/update_semantic_object (服务)
+#### 9.9.4 /update_semantic_object (服务)
 
 > 更新语义对象
 
@@ -4315,7 +4323,7 @@ ros2 service call ${MM}/update_semantic_object map_manager/srv/UpdateSemanticObj
   "{floor_id: 'F1', object: {id: 'desk_001', name: 'Executive Desk', type: 'desk', category: 'furniture', pose: {position: {x: 3.0, y: 4.0, z: 0.0}, orientation: {w: 1.0}}, dimensions: {x: 1.6, y: 0.8, z: 0.75}, is_static: true}}"
 ```
 
-#### 9.9.5 /map_manager/remove_semantic_object (服务)
+#### 9.9.5 /remove_semantic_object (服务)
 
 > 删除语义对象
 
@@ -4341,7 +4349,7 @@ ros2 service call ${MM}/remove_semantic_object map_manager/srv/RemoveSemanticObj
   "{floor_id: 'F1', object_id: 'desk_001'}"
 ```
 
-#### 9.9.6 /map_manager/remove_all_semantic_objects (服务)
+#### 9.9.6 /remove_all_semantic_objects (服务)
 
 > 删除所有语义对象
 
@@ -4556,7 +4564,7 @@ if __name__ == '__main__':
 | /camera_01/filtered_pointcloud | sensor_msgs/PointCloud2 | 发布 | 过滤后的点云 |
 | /Humanoid_nav/health | fourier_msgs/HealthInfo | 发布 | 系统健康状态 |
 | /Humanoid_nav/events | fourier_msgs/EventsInfo | 发布 | 系统事件通知 |
-| /map_manager/current_floor | std_msgs/String | 发布 | 当前楼层 ID（命名空间时：`/<ns>/map_manager/current_floor`）|
+| /current_floor | std_msgs/String | 发布 | 当前楼层 ID（命名空间时：`/<ns>/current_floor`）|
 
 ### 服务列表
 
@@ -4579,87 +4587,87 @@ if __name__ == '__main__':
 
 | 服务名 | 服务类型 | 说明 |
 | ------ | -------- | ---- |
-| /map_manager/load_composite_map | map_manager/LoadCompositeMap | 加载复合地图 |
-| /map_manager/save_composite_map | map_manager/SaveCompositeMap | 保存复合地图 |
-| /map_manager/clear_composite_map | map_manager/ClearCompositeMap | 清除复合地图 |
+| /load_composite_map | map_manager/LoadCompositeMap | 加载复合地图 |
+| /save_composite_map | map_manager/SaveCompositeMap | 保存复合地图 |
+| /clear_composite_map | map_manager/ClearCompositeMap | 清除复合地图 |
 
 #### Map Manager - 楼层管理服务
 
 | 服务名 | 服务类型 | 说明 |
 | ------ | -------- | ---- |
-| /map_manager/list_floors | map_manager/ListFloors | 列出所有楼层 |
-| /map_manager/switch_floor | map_manager/SwitchFloor | 切换楼层 |
-| /map_manager/add_floor | map_manager/AddFloor | 添加楼层 |
-| /map_manager/remove_floor | map_manager/RemoveFloor | 删除楼层 |
-| /map_manager/save_floor | map_manager/SaveFloor | 保存楼层数据 |
-| /map_manager/load_floor | map_manager/LoadFloor | 加载楼层数据 |
-| /map_manager/clear_floor | map_manager/ClearFloor | 清除楼层数据 |
+| /list_floors | map_manager/ListFloors | 列出所有楼层 |
+| /switch_floor | map_manager/SwitchFloor | 切换楼层 |
+| /add_floor | map_manager/AddFloor | 添加楼层 |
+| /remove_floor | map_manager/RemoveFloor | 删除楼层 |
+| /save_floor | map_manager/SaveFloor | 保存楼层数据 |
+| /load_floor | map_manager/LoadFloor | 加载楼层数据 |
+| /clear_floor | map_manager/ClearFloor | 清除楼层数据 |
 
 #### Map Manager - POI 管理服务
 
 | 服务名 | 服务类型 | 说明 |
 | ------ | -------- | ---- |
-| /map_manager/add_poi | map_manager/AddPOI | 添加 POI |
-| /map_manager/get_poi | map_manager/GetPOI | 获取 POI |
-| /map_manager/list_pois | map_manager/ListPOIs | 列出 POI |
-| /map_manager/update_poi | map_manager/UpdatePOI | 更新 POI |
-| /map_manager/remove_poi | map_manager/RemovePOI | 删除 POI |
-| /map_manager/remove_all_pois | map_manager/RemoveAllPOIs | 删除所有 POI |
+| /add_poi | map_manager/AddPOI | 添加 POI |
+| /get_poi | map_manager/GetPOI | 获取 POI |
+| /list_pois | map_manager/ListPOIs | 列出 POI |
+| /update_poi | map_manager/UpdatePOI | 更新 POI |
+| /remove_poi | map_manager/RemovePOI | 删除 POI |
+| /remove_all_pois | map_manager/RemoveAllPOIs | 删除所有 POI |
 
 #### Map Manager - 虚拟墙管理服务
 
 | 服务名 | 服务类型 | 说明 |
 | ------ | -------- | ---- |
-| /map_manager/add_virtual_wall | map_manager/AddVirtualWall | 添加虚拟墙 |
-| /map_manager/get_virtual_wall | map_manager/GetVirtualWall | 获取虚拟墙 |
-| /map_manager/list_virtual_walls | map_manager/ListVirtualWalls | 列出虚拟墙 |
-| /map_manager/update_virtual_wall | map_manager/UpdateVirtualWall | 更新虚拟墙 |
-| /map_manager/remove_virtual_wall | map_manager/RemoveVirtualWall | 删除虚拟墙 |
-| /map_manager/remove_virtual_walls | map_manager/RemoveVirtualWalls | 批量删除虚拟墙 |
+| /add_virtual_wall | map_manager/AddVirtualWall | 添加虚拟墙 |
+| /get_virtual_wall | map_manager/GetVirtualWall | 获取虚拟墙 |
+| /list_virtual_walls | map_manager/ListVirtualWalls | 列出虚拟墙 |
+| /update_virtual_wall | map_manager/UpdateVirtualWall | 更新虚拟墙 |
+| /remove_virtual_wall | map_manager/RemoveVirtualWall | 删除虚拟墙 |
+| /remove_virtual_walls | map_manager/RemoveVirtualWalls | 批量删除虚拟墙 |
 
 #### Map Manager - 禁区管理服务
 
 | 服务名 | 服务类型 | 说明 |
 | ------ | -------- | ---- |
-| /map_manager/add_forbidden_area | map_manager/AddForbiddenArea | 添加禁区 |
-| /map_manager/get_forbidden_area | map_manager/GetForbiddenArea | 获取禁区 |
-| /map_manager/list_forbidden_areas | map_manager/ListForbiddenAreas | 列出禁区 |
-| /map_manager/update_forbidden_area | map_manager/UpdateForbiddenArea | 更新禁区 |
-| /map_manager/remove_forbidden_area | map_manager/RemoveForbiddenArea | 删除单个禁区 |
-| /map_manager/remove_all_forbidden_areas | map_manager/RemoveAllForbiddenAreas | 删除所有禁区 |
+| /add_forbidden_area | map_manager/AddForbiddenArea | 添加禁区 |
+| /get_forbidden_area | map_manager/GetForbiddenArea | 获取禁区 |
+| /list_forbidden_areas | map_manager/ListForbiddenAreas | 列出禁区 |
+| /update_forbidden_area | map_manager/UpdateForbiddenArea | 更新禁区 |
+| /remove_forbidden_area | map_manager/RemoveForbiddenArea | 删除单个禁区 |
+| /remove_all_forbidden_areas | map_manager/RemoveAllForbiddenAreas | 删除所有禁区 |
 
 #### Map Manager - 限速区管理服务
 
 | 服务名 | 服务类型 | 说明 |
 | ------ | -------- | ---- |
-| /map_manager/add_dangerous_area | map_manager/AddDangerousArea | 添加限速区 |
-| /map_manager/get_dangerous_area | map_manager/GetDangerousArea | 获取限速区 |
-| /map_manager/list_dangerous_areas | map_manager/ListDangerousAreas | 列出限速区 |
-| /map_manager/update_dangerous_area | map_manager/UpdateDangerousArea | 更新限速区 |
-| /map_manager/remove_dangerous_area | map_manager/RemoveDangerousArea | 删除限速区 |
-| /map_manager/remove_all_dangerous_areas | map_manager/RemoveAllDangerousAreas | 删除所有限速区 |
+| /add_dangerous_area | map_manager/AddDangerousArea | 添加限速区 |
+| /get_dangerous_area | map_manager/GetDangerousArea | 获取限速区 |
+| /list_dangerous_areas | map_manager/ListDangerousAreas | 列出限速区 |
+| /update_dangerous_area | map_manager/UpdateDangerousArea | 更新限速区 |
+| /remove_dangerous_area | map_manager/RemoveDangerousArea | 删除限速区 |
+| /remove_all_dangerous_areas | map_manager/RemoveAllDangerousAreas | 删除所有限速区 |
 
 #### Map Manager - 房间管理服务
 
 | 服务名 | 服务类型 | 说明 |
 | ------ | -------- | ---- |
-| /map_manager/add_room | map_manager/AddRoom | 添加房间 |
-| /map_manager/get_room | map_manager/GetRoom | 获取房间 |
-| /map_manager/list_rooms | map_manager/ListRooms | 列出房间 |
-| /map_manager/update_room | map_manager/UpdateRoom | 更新房间 |
-| /map_manager/remove_room | map_manager/RemoveRoom | 删除房间 |
-| /map_manager/remove_all_rooms | map_manager/RemoveAllRooms | 删除所有房间 |
+| /add_room | map_manager/AddRoom | 添加房间 |
+| /get_room | map_manager/GetRoom | 获取房间 |
+| /list_rooms | map_manager/ListRooms | 列出房间 |
+| /update_room | map_manager/UpdateRoom | 更新房间 |
+| /remove_room | map_manager/RemoveRoom | 删除房间 |
+| /remove_all_rooms | map_manager/RemoveAllRooms | 删除所有房间 |
 
 #### Map Manager - 语义对象管理服务
 
 | 服务名 | 服务类型 | 说明 |
 | ------ | -------- | ---- |
-| /map_manager/add_semantic_object | map_manager/AddSemanticObject | 添加语义对象 |
-| /map_manager/get_semantic_object | map_manager/GetSemanticObject | 获取语义对象 |
-| /map_manager/list_semantic_objects | map_manager/ListSemanticObjects | 列出语义对象 |
-| /map_manager/update_semantic_object | map_manager/UpdateSemanticObject | 更新语义对象 |
-| /map_manager/remove_semantic_object | map_manager/RemoveSemanticObject | 删除语义对象 |
-| /map_manager/remove_all_semantic_objects | map_manager/RemoveAllSemanticObjects | 删除所有语义对象 |
+| /add_semantic_object | map_manager/AddSemanticObject | 添加语义对象 |
+| /get_semantic_object | map_manager/GetSemanticObject | 获取语义对象 |
+| /list_semantic_objects | map_manager/ListSemanticObjects | 列出语义对象 |
+| /update_semantic_object | map_manager/UpdateSemanticObject | 更新语义对象 |
+| /remove_semantic_object | map_manager/RemoveSemanticObject | 删除语义对象 |
+| /remove_all_semantic_objects | map_manager/RemoveAllSemanticObjects | 删除所有语义对象 |
 
 ### 动作列表
 
