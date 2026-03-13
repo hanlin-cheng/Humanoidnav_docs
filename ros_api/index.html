@@ -50,6 +50,8 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">ROS2 接口文档</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#_1">特别注意：</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#1">1. 建图定位模式切换</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#11-slamset_mode">1.1 /slam/set_mode (服务)</a>
@@ -100,7 +102,7 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#feedback">Feedback（实时反馈）</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#_1">调用示例</a>
+    <li class="toctree-l4"><a class="reference internal" href="#_2">调用示例</a>
     </li>
         </ul>
     </li>
@@ -338,13 +340,13 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#10">10. 接口汇总表</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#_2">话题列表</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_3">话题列表</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_3">服务列表</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_4">服务列表</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#slam">SLAM 服务</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#_4">导航动作服务</a>
+    <li class="toctree-l4"><a class="reference internal" href="#_5">导航动作服务</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#map-manager-">Map Manager - 复合地图服务</a>
     </li>
@@ -364,9 +366,9 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_5">动作列表</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_6">动作列表</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#_6">消息类型列表</a>
+    <li class="toctree-l3"><a class="reference internal" href="#_7">消息类型列表</a>
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#map-manager">Map Manager 消息</a>
     </li>
@@ -567,6 +569,11 @@
     </ul>
                   </li>
               </ul>
+              <p class="caption"><span class="caption-text">版本维护说明</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../version/">version</a>
+                  </li>
+              </ul>
       </div>
     </div>
     </nav>
@@ -592,6 +599,36 @@
               
                 <h1 id="ros2">ROS2 接口文档</h1>
 <p>本文档详细描述了 HumanoidNav 导航系统的所有ROS2接口，包括话题、服务和动作。</p>
+<hr />
+<h2 id="_1"><strong>特别注意：</strong></h2>
+<p>如果算法包在自定义namespace下运行，那么所有的node，topic，service，action都会增加namespace前缀，但是消息体结构不会发生变化。</p>
+<p>e.g. </p>
+<table>
+<thead>
+<tr>
+<th><strong>无namespace</strong></th>
+<th><strong>有namesapce<robot1></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/slam/set_mode</td>
+<td>/robot1/slam/set_mode</td>
+</tr>
+<tr>
+<td>ros2 service call /slam/set_mode fourier_msgs/srv/SetMode "{mode: 'mapping'}"</td>
+<td>ros2 service call /robot1/slam/set_mode fourier_msgs/srv/SetMode "{mode: 'mapping'}"</td>
+</tr>
+<tr>
+<td>/slam/mode_status</td>
+<td>/slam/mode_status</td>
+</tr>
+<tr>
+<td>ros2 topic echo /slam/mode_status</td>
+<td>ros2 topic echo /robot1/slam/mode_status</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="1">1. 建图定位模式切换</h2>
 <h3 id="11-slamset_mode">1.1 /slam/set_mode (服务)</h3>
@@ -1417,7 +1454,7 @@ private:
 </tr>
 </tbody>
 </table>
-<h4 id="_1">调用示例</h4>
+<h4 id="_2">调用示例</h4>
 <p><strong>命令行</strong>:</p>
 <pre><code class="language-bash"># 导航到位置(1.0, 2.0)，朝向yaw=45度
 ros2 action send_goal /navigate_to_pose nav2_msgs/action/NavigateToPose \
@@ -6556,7 +6593,7 @@ if __name__ == '__main__':
     main()
 </code></pre>
 <h2 id="10">10. 接口汇总表</h2>
-<h3 id="_2">话题列表</h3>
+<h3 id="_3">话题列表</h3>
 <table>
 <thead>
 <tr>
@@ -6725,7 +6762,7 @@ if __name__ == '__main__':
 </tr>
 </tbody>
 </table>
-<h3 id="_3">服务列表</h3>
+<h3 id="_4">服务列表</h3>
 <h4 id="slam">SLAM 服务</h4>
 <table>
 <thead>
@@ -6753,7 +6790,7 @@ if __name__ == '__main__':
 </tr>
 </tbody>
 </table>
-<h4 id="_4">导航动作服务</h4>
+<h4 id="_5">导航动作服务</h4>
 <table>
 <thead>
 <tr>
@@ -7101,7 +7138,7 @@ if __name__ == '__main__':
 </tr>
 </tbody>
 </table>
-<h3 id="_5">动作列表</h3>
+<h3 id="_6">动作列表</h3>
 <table>
 <thead>
 <tr>
@@ -7133,7 +7170,7 @@ if __name__ == '__main__':
 </tr>
 </tbody>
 </table>
-<h3 id="_6">消息类型列表</h3>
+<h3 id="_7">消息类型列表</h3>
 <h4 id="map-manager">Map Manager 消息</h4>
 <table>
 <thead>
