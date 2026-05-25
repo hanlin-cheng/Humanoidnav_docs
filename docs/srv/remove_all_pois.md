@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/RemoveAllPOIs`
 
-**服务名**: `/map_manager/remove_all_po_is`
+**服务名**: `${MM}/remove_all_po_is`
 
 ## 描述
 
@@ -26,6 +26,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/remove_all_po_is map_manager/srv/RemoveAllPOIs \
+ros2 service call ${MM}/remove_all_po_is map_manager/srv/RemoveAllPOIs \
   "{floor_id: '1F'}"
 ```

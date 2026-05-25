@@ -26,8 +26,8 @@
 
 ```bash
 # 添加办公桌对象
-ros2 service call /map_manager/add_semantic_object map_manager/srv/AddSemanticObject \
-  "{floor_id: 'F1',
+ros2 service call ${MM}/add_semantic_object map_manager/srv/AddSemanticObject \
+  "{floor_id: '1F',
     object: {
       id: 'desk_001',
       name: 'Office Desk',

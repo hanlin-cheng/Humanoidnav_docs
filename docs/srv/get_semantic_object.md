@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/GetSemanticObject`
 
-**服务名**: `/map_manager/get_semantic_object`
+**服务名**: `${MM}/get_semantic_object`
 
 ## 描述
 
@@ -28,6 +28,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/get_semantic_object map_manager/srv/GetSemanticObject \
+ros2 service call ${MM}/get_semantic_object map_manager/srv/GetSemanticObject \
   "{floor_id: '1F', id: 'example_id'}"
 ```

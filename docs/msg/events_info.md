@@ -18,7 +18,8 @@ fourier_msgs/msg/EventsInfo.msg
 
 - **话题名**: `/Humanoid_nav/events`
 - **发布节点**: `events_node`
-- **发布频率**: 10 Hz（可配置）
+- **发布频率**: 10 Hz（由参数 `events_pub_period` 控制，默认 0.1s；可通过 launch 参数覆盖）
+- **发布行为**: 每个发布周期都会发布一次（**即使 `events` 数组为空**），相当于心跳。下游可据此判断 events_node 是否在线
 
 ### 相关消息
 

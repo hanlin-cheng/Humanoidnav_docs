@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/RemoveFloor`
 
-**服务名**: `/map_manager/remove_floor`
+**服务名**: `${MM}/remove_floor`
 
 ## 描述
 
@@ -26,6 +26,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/remove_floor map_manager/srv/RemoveFloor \
+ros2 service call ${MM}/remove_floor map_manager/srv/RemoveFloor \
   "{floor_id: '1F'}"
 ```

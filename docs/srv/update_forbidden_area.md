@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/UpdateForbiddenArea`
 
-**服务名**: `/map_manager/update_forbidden_area`
+**服务名**: `${MM}/update_forbidden_area`
 
 ## 描述
 
@@ -28,6 +28,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/update_forbidden_area map_manager/srv/UpdateForbiddenArea \
+ros2 service call ${MM}/update_forbidden_area map_manager/srv/UpdateForbiddenArea \
   "{floor_id: '1F'}"
 ```

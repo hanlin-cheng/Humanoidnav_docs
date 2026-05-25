@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/AddPOI`
 
-**服务名**: `/map_manager/add_poi`
+**服务名**: `${MM}/add_poi`
 
 ## 描述
 
@@ -27,16 +27,16 @@
 
 ```bash
 # 添加充电桩 POI
-ros2 service call /map_manager/add_poi map_manager/srv/AddPOI \
-  "{poi: {id: 'charger_01', name: 'Main Charger', type: 'charging_station', floor_id: 'F1', pose: {x: 5.0, y: 3.0, theta: 1.57}}}"
+ros2 service call ${MM}/add_poi map_manager/srv/AddPOI \
+  "{poi: {id: 'charger_01', name: 'Main Charger', type: 'charging_station', floor_id: '1F', pose: {x: 5.0, y: 3.0, theta: 1.57}}}"
 
 # 添加门 POI
-ros2 service call /map_manager/add_poi map_manager/srv/AddPOI \
-  "{poi: {id: 'door_101', name: 'Room 101 Door', type: 'door', floor_id: 'F1', pose: {x: 10.0, y: 5.0, theta: 0.0}}}"
+ros2 service call ${MM}/add_poi map_manager/srv/AddPOI \
+  "{poi: {id: 'door_101', name: 'Room 101 Door', type: 'door', floor_id: '1F', pose: {x: 10.0, y: 5.0, theta: 0.0}}}"
 
 # 添加带自定义属性的 POI
-ros2 service call /map_manager/add_poi map_manager/srv/AddPOI \
-  "{poi: {id: 'station_01', name: 'Work Station 1', type: 'workstation', floor_id: 'F1', pose: {x: 8.0, y: 6.0, theta: 3.14}, properties: '{\"capacity\": 2, \"equipment\": [\"computer\", \"printer\"]}'}}"
+ros2 service call ${MM}/add_poi map_manager/srv/AddPOI \
+  "{poi: {id: 'station_01', name: 'Work Station 1', type: 'workstation', floor_id: '1F', pose: {x: 8.0, y: 6.0, theta: 3.14}, properties: '{\"capacity\": 2, \"equipment\": [\"computer\", \"printer\"]}'}}"
 ```
 
 ### Python 示例
@@ -52,7 +52,7 @@ import json
 class POIManager(Node):
     def __init__(self):
         super().__init__('poi_manager')
-        self.client = self.create_client(AddPOI, '/map_manager/add_poi')
+        self.client = self.create_client(AddPOI, '${MM}/add_poi')
         self.client.wait_for_service()
 
     def add_poi(self, poi_id: str, name: str, poi_type: str, floor_id: str,
@@ -85,7 +85,7 @@ manager.add_poi(
     poi_id='charger_01',
     name='Main Charger',
     poi_type='charging_station',
-    floor_id='F1',
+    floor_id='1F',
     x=5.0, y=3.0, theta=1.57,
     properties={'voltage': 24, 'max_current': 10}
 )
@@ -95,7 +95,7 @@ manager.add_poi(
     poi_id='waypoint_01',
     name='Patrol Point 1',
     poi_type='waypoint',
-    floor_id='F1',
+    floor_id='1F',
     x=10.0, y=8.0, theta=0.0
 )
 
@@ -112,7 +112,7 @@ rclpy.shutdown()
 class POIManager : public rclcpp::Node {
 public:
     POIManager() : Node("poi_manager") {
-        client_ = create_client<map_manager::srv::AddPOI>("/map_manager/add_poi");
+        client_ = create_client<map_manager::srv::AddPOI>("${MM}/add_poi");
         client_->wait_for_service();
     }
 

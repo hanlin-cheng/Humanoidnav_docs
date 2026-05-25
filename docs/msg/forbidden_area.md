@@ -21,8 +21,8 @@
 
 ```bash
 # 添加禁区（正方形）
-ros2 service call /map_manager/add_forbidden_area map_manager/srv/AddForbiddenArea \
-  "{floor_id: 'F1',
+ros2 service call ${MM}/add_forbidden_area map_manager/srv/AddForbiddenArea \
+  "{floor_id: '1F',
     area: {
       id: 1,
       boundary: {

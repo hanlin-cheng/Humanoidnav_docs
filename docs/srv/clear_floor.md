@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/ClearFloor`
 
-**服务名**: `/map_manager/clear_floor`
+**服务名**: `${MM}/clear_floor`
 
 ## 描述
 
@@ -26,6 +26,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/clear_floor map_manager/srv/ClearFloor \
+ros2 service call ${MM}/clear_floor map_manager/srv/ClearFloor \
   "{floor_id: '1F'}"
 ```

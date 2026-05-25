@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/RemoveVirtualWalls`
 
-**服务名**: `/map_manager/remove_virtual_walls`
+**服务名**: `${MM}/remove_virtual_walls`
 
 ## 描述
 
@@ -27,6 +27,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/remove_virtual_walls map_manager/srv/RemoveVirtualWalls \
+ros2 service call ${MM}/remove_virtual_walls map_manager/srv/RemoveVirtualWalls \
   "{floor_id: '1F'}"
 ```

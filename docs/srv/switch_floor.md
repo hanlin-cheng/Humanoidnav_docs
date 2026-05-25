@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/SwitchFloor`
 
-**服务名**: `/map_manager/switch_floor`
+**服务名**: `${MM}/switch_floor`
 
 ## 描述
 
@@ -32,12 +32,12 @@
 
 ```bash
 # 直接切换楼层
-ros2 service call /map_manager/switch_floor map_manager/srv/SwitchFloor \
-  "{floor_id: 'F2', initial_pose: {x: 0.0, y: 0.0, theta: 0.0}, use_transition: false}"
+ros2 service call ${MM}/switch_floor map_manager/srv/SwitchFloor \
+  "{floor_id: '2F', initial_pose: {x: 0.0, y: 0.0, theta: 0.0}, use_transition: false}"
 
 # 使用电梯过渡点切换
-ros2 service call /map_manager/switch_floor map_manager/srv/SwitchFloor \
-  "{floor_id: 'F2', use_transition: true, transition_id: 'elevator_1'}"
+ros2 service call ${MM}/switch_floor map_manager/srv/SwitchFloor \
+  "{floor_id: '2F', use_transition: true, transition_id: 'elevator_1'}"
 ```
 
 ### Python 示例
@@ -51,7 +51,7 @@ from rclpy.node import Node
 class FloorSwitcher(Node):
     def __init__(self):
         super().__init__('floor_switcher')
-        self.client = self.create_client(SwitchFloor, '/map_manager/switch_floor')
+        self.client = self.create_client(SwitchFloor, '${MM}/switch_floor')
         self.client.wait_for_service()
 
     def switch_direct(self, floor_id: str, x: float = 0.0, y: float = 0.0, theta: float = 0.0):
@@ -85,11 +85,11 @@ class FloorSwitcher(Node):
 rclpy.init()
 switcher = FloorSwitcher()
 
-# 直接切换到 F2
-switcher.switch_direct('F2', x=5.0, y=3.0, theta=1.57)
+# 直接切换到 2F
+switcher.switch_direct('2F', x=5.0, y=3.0, theta=1.57)
 
 # 使用电梯切换
-switcher.switch_via_transition('F3', 'elevator_main')
+switcher.switch_via_transition('3F', 'elevator_main')
 
 rclpy.shutdown()
 ```
@@ -105,7 +105,7 @@ class FloorSwitcher : public rclcpp::Node {
 public:
     FloorSwitcher() : Node("floor_switcher") {
         client_ = create_client<map_manager::srv::SwitchFloor>(
-            "/map_manager/switch_floor");
+            "${MM}/switch_floor");
         client_->wait_for_service();
     }
 

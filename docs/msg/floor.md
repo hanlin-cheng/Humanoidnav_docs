@@ -36,7 +36,7 @@
 
 ```bash
 # 添加楼层时使用 Floor 消息
-ros2 service call /map_manager/add_floor map_manager/srv/AddFloor \
+ros2 service call ${MM}/add_floor map_manager/srv/AddFloor \
   "{floor: {
     floor_id: '1F',
     name: 'First Floor',

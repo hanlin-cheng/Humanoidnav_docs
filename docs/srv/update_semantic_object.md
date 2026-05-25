@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/UpdateSemanticObject`
 
-**服务名**: `/map_manager/update_semantic_object`
+**服务名**: `${MM}/update_semantic_object`
 
 ## 描述
 
@@ -27,6 +27,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/update_semantic_object map_manager/srv/UpdateSemanticObject \
+ros2 service call ${MM}/update_semantic_object map_manager/srv/UpdateSemanticObject \
   "{floor_id: '1F'}"
 ```

@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/ListSemanticObjects`
 
-**服务名**: `/map_manager/list_semantic_objects`
+**服务名**: `${MM}/list_semantic_objects`
 
 ## 描述
 
@@ -28,6 +28,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/list_semantic_objects map_manager/srv/ListSemanticObjects \
+ros2 service call ${MM}/list_semantic_objects map_manager/srv/ListSemanticObjects \
   "{floor_id: '1F', object_type: ''}"
 ```

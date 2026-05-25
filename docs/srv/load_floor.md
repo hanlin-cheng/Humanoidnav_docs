@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/LoadFloor`
 
-**服务名**: `/map_manager/load_floor`
+**服务名**: `${MM}/load_floor`
 
 ## 描述
 
@@ -28,6 +28,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/load_floor map_manager/srv/LoadFloor \
+ros2 service call ${MM}/load_floor map_manager/srv/LoadFloor \
   "{floor_id: '1F', input_path: ''}"
 ```

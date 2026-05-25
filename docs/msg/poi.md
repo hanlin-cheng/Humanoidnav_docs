@@ -26,12 +26,12 @@
 
 ```bash
 # 添加充电站 POI
-ros2 service call /map_manager/add_poi map_manager/srv/AddPOI \
+ros2 service call ${MM}/add_poi map_manager/srv/AddPOI \
   "{poi: {
     id: 'charging_1',
     name: 'Charging Station 1',
     type: 'charging_station',
-    floor_id: 'F1',
+    floor_id: '1F',
     pose: {x: 5.0, y: 3.0, theta: 1.57},
     height: 0.0,
     properties: '{\"voltage\": 24, \"current\": 10}'
@@ -49,7 +49,7 @@ poi = POI()
 poi.id = 'charging_1'
 poi.name = 'Charging Station 1'
 poi.type = 'charging_station'
-poi.floor_id = 'F1'
+poi.floor_id = '1F'
 poi.pose = Pose2D(x=5.0, y=3.0, theta=1.57)
 poi.height = 0.0
 poi.properties = json.dumps({'voltage': 24, 'current': 10})

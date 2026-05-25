@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/GetPOI`
 
-**服务名**: `/map_manager/get_poi`
+**服务名**: `${MM}/get_poi`
 
 ## 描述
 
@@ -28,6 +28,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/get_poi map_manager/srv/GetPOI \
+ros2 service call ${MM}/get_poi map_manager/srv/GetPOI \
   "{floor_id: '1F', id: 'example_id'}"
 ```

@@ -27,8 +27,8 @@
 
 ```bash
 # 添加办公室房间
-ros2 service call /map_manager/add_room map_manager/srv/AddRoom \
-  "{floor_id: 'F1',
+ros2 service call ${MM}/add_room map_manager/srv/AddRoom \
+  "{floor_id: '1F',
     room: {
       id: 'room_101',
       name: 'Office 101',

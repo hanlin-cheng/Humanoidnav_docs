@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/GetCurrentFloor`
 
-**服务名**: `/map_manager/get_current_floor`
+**服务名**: `${MM}/get_current_floor`
 
 ## 描述
 
@@ -25,5 +25,5 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/get_current_floor map_manager/srv/GetCurrentFloor
+ros2 service call ${MM}/get_current_floor map_manager/srv/GetCurrentFloor
 ```

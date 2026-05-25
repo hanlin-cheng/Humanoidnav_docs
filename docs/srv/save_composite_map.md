@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/SaveCompositeMap`
 
-**服务名**: `/map_manager/save_composite_map`
+**服务名**: `${MM}/save_composite_map`
 
 ## 描述
 
@@ -30,15 +30,15 @@
 
 ```bash
 # 保存为目录格式
-ros2 service call /map_manager/save_composite_map map_manager/srv/SaveCompositeMap \
+ros2 service call ${MM}/save_composite_map map_manager/srv/SaveCompositeMap \
   "{map_path: '/opt/fftai/Navigation/Map/my_map', compress: false}"
 
 # 保存为压缩包格式
-ros2 service call /map_manager/save_composite_map map_manager/srv/SaveCompositeMap \
+ros2 service call ${MM}/save_composite_map map_manager/srv/SaveCompositeMap \
   "{map_path: '/opt/fftai/Navigation/Map/my_map', compress: true}"
 
 # 路径以 .mmap 结尾时自动压缩
-ros2 service call /map_manager/save_composite_map map_manager/srv/SaveCompositeMap \
+ros2 service call ${MM}/save_composite_map map_manager/srv/SaveCompositeMap \
   "{map_path: '/opt/fftai/Navigation/Map/my_map.mmap'}"
 ```
 
@@ -53,7 +53,7 @@ class MapSaver(Node):
     def __init__(self):
         super().__init__('map_saver')
         self.client = self.create_client(
-            SaveCompositeMap, '/map_manager/save_composite_map')
+            SaveCompositeMap, '${MM}/save_composite_map')
         self.client.wait_for_service()
 
     def save(self, path: str, compress: bool = False):
@@ -93,7 +93,7 @@ class MapSaver : public rclcpp::Node {
 public:
     MapSaver() : Node("map_saver") {
         client_ = create_client<map_manager::srv::SaveCompositeMap>(
-            "/map_manager/save_composite_map");
+            "${MM}/save_composite_map");
         client_->wait_for_service();
     }
 

@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/UpdateVirtualWall`
 
-**服务名**: `/map_manager/update_virtual_wall`
+**服务名**: `${MM}/update_virtual_wall`
 
 ## 描述
 
@@ -26,6 +26,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/update_virtual_wall map_manager/srv/UpdateVirtualWall \
+ros2 service call ${MM}/update_virtual_wall map_manager/srv/UpdateVirtualWall \
   "{}"
 ```

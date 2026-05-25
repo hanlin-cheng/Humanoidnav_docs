@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/RemoveForbiddenArea`
 
-**服务名**: `/map_manager/remove_forbidden_area`
+**服务名**: `${MM}/remove_forbidden_area`
 
 ## 描述
 
@@ -28,6 +28,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/remove_forbidden_area map_manager/srv/RemoveForbiddenArea \
+ros2 service call ${MM}/remove_forbidden_area map_manager/srv/RemoveForbiddenArea \
   "{floor_id: '1F', area_id: 0}"
 ```

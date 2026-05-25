@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/GetDangerousArea`
 
-**服务名**: `/map_manager/get_dangerous_area`
+**服务名**: `${MM}/get_dangerous_area`
 
 ## 描述
 
@@ -29,6 +29,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/get_dangerous_area map_manager/srv/GetDangerousArea \
+ros2 service call ${MM}/get_dangerous_area map_manager/srv/GetDangerousArea \
   "{floor_id: '1F', id: 'example_id'}"
 ```

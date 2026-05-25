@@ -22,8 +22,8 @@
 
 ```bash
 # 添加限速区（正方形，限速 0.3m/s）
-ros2 service call /map_manager/add_dangerous_area map_manager/srv/AddDangerousArea \
-  "{floor_id: 'F1',
+ros2 service call ${MM}/add_dangerous_area map_manager/srv/AddDangerousArea \
+  "{floor_id: '1F',
     area: {
       id: 1,
       boundary: {

@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/LoadCompositeMap`
 
-**服务名**: `/map_manager/load_composite_map`
+**服务名**: `${MM}/load_composite_map`
 
 ## 描述
 
@@ -29,11 +29,11 @@
 
 ```bash
 # 加载目录格式地图
-ros2 service call /map_manager/load_composite_map map_manager/srv/LoadCompositeMap \
+ros2 service call ${MM}/load_composite_map map_manager/srv/LoadCompositeMap \
   "{map_path: '/opt/fftai/Navigation/Map/office'}"
 
 # 加载压缩包格式地图
-ros2 service call /map_manager/load_composite_map map_manager/srv/LoadCompositeMap \
+ros2 service call ${MM}/load_composite_map map_manager/srv/LoadCompositeMap \
   "{map_path: '/opt/fftai/Navigation/Map/office.mmap'}"
 ```
 
@@ -48,7 +48,7 @@ class MapLoader(Node):
     def __init__(self):
         super().__init__('map_loader')
         self.client = self.create_client(
-            LoadCompositeMap, '/map_manager/load_composite_map')
+            LoadCompositeMap, '${MM}/load_composite_map')
         self.client.wait_for_service()
 
     def load(self, path: str):
@@ -85,7 +85,7 @@ class MapLoader : public rclcpp::Node {
 public:
     MapLoader() : Node("map_loader") {
         client_ = create_client<map_manager::srv::LoadCompositeMap>(
-            "/map_manager/load_composite_map");
+            "${MM}/load_composite_map");
         client_->wait_for_service();
     }
 
@@ -118,12 +118,12 @@ private:
 map_directory/
 ├── map_info.json           # 复合地图元信息
 ├── floors/
-│   ├── F1/
+│   ├── 1F/
 │   │   ├── localization/   # 定位层 (3D点云)
 │   │   ├── navigation/     # 导航层 (2D栅格)
 │   │   ├── semantic/       # 语义层 (POI等)
 │   │   └── virtual/        # 虚拟层 (虚拟墙等)
-│   └── F2/
+│   └── 2F/
 │       └── ...
 └── transitions.json        # 楼层过渡点
 ```

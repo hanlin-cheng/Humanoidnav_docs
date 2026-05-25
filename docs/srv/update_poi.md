@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/UpdatePOI`
 
-**服务名**: `/map_manager/update_poi`
+**服务名**: `${MM}/update_poi`
 
 ## 描述
 
@@ -26,6 +26,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/update_poi map_manager/srv/UpdatePOI \
+ros2 service call ${MM}/update_poi map_manager/srv/UpdatePOI \
   "{}"
 ```

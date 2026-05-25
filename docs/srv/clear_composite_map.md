@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/ClearCompositeMap`
 
-**服务名**: `/map_manager/clear_composite_map`
+**服务名**: `${MM}/clear_composite_map`
 
 ## 描述
 
@@ -24,5 +24,5 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/clear_composite_map map_manager/srv/ClearCompositeMap
+ros2 service call ${MM}/clear_composite_map map_manager/srv/ClearCompositeMap
 ```

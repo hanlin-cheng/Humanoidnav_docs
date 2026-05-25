@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/AddDangerousArea`
 
-**服务名**: `/map_manager/add_dangerous_area`
+**服务名**: `${MM}/add_dangerous_area`
 
 ## 描述
 
@@ -30,12 +30,12 @@
 
 ```bash
 # 添加矩形限速区，限速 0.5 m/s
-ros2 service call /map_manager/add_dangerous_area map_manager/srv/AddDangerousArea \
-  "{floor_id: 'F1', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 3.0, y: 0.0, z: 0.0}, {x: 3.0, y: 3.0, z: 0.0}, {x: 0.0, y: 3.0, z: 0.0}]}, speed_limit: 0.5}}"
+ros2 service call ${MM}/add_dangerous_area map_manager/srv/AddDangerousArea \
+  "{floor_id: '1F', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 3.0, y: 0.0, z: 0.0}, {x: 3.0, y: 3.0, z: 0.0}, {x: 0.0, y: 3.0, z: 0.0}]}, speed_limit: 0.5}}"
 
 # 添加走廊限速区，限速 0.3 m/s
-ros2 service call /map_manager/add_dangerous_area map_manager/srv/AddDangerousArea \
-  "{floor_id: 'F1', area: {id: 2, boundary: {points: [{x: 10.0, y: 0.0, z: 0.0}, {x: 15.0, y: 0.0, z: 0.0}, {x: 15.0, y: 2.0, z: 0.0}, {x: 10.0, y: 2.0, z: 0.0}]}, speed_limit: 0.3}}"
+ros2 service call ${MM}/add_dangerous_area map_manager/srv/AddDangerousArea \
+  "{floor_id: '1F', area: {id: 2, boundary: {points: [{x: 10.0, y: 0.0, z: 0.0}, {x: 15.0, y: 0.0, z: 0.0}, {x: 15.0, y: 2.0, z: 0.0}, {x: 10.0, y: 2.0, z: 0.0}]}, speed_limit: 0.3}}"
 ```
 
 ### Python 示例
@@ -51,7 +51,7 @@ class DangerousAreaManager(Node):
     def __init__(self):
         super().__init__('dangerous_area_manager')
         self.client = self.create_client(
-            AddDangerousArea, '/map_manager/add_dangerous_area')
+            AddDangerousArea, '${MM}/add_dangerous_area')
         self.client.wait_for_service()
         self.next_id = 1
 
@@ -95,10 +95,10 @@ rclpy.init()
 manager = DangerousAreaManager()
 
 # 添加矩形限速区（0.5 m/s）
-manager.add_rectangle('F1', 0.0, 0.0, 3.0, 3.0, speed_limit=0.5)
+manager.add_rectangle('1F', 0.0, 0.0, 3.0, 3.0, speed_limit=0.5)
 
 # 添加自定义多边形限速区
-manager.add_area('F1',
+manager.add_area('1F',
     [(5.0, 5.0), (8.0, 5.0), (8.0, 8.0), (5.0, 8.0)],
     speed_limit=0.3)
 
@@ -116,7 +116,7 @@ class DangerousAreaManager : public rclcpp::Node {
 public:
     DangerousAreaManager() : Node("dangerous_area_manager"), next_id_(1) {
         client_ = create_client<map_manager::srv::AddDangerousArea>(
-            "/map_manager/add_dangerous_area");
+            "${MM}/add_dangerous_area");
         client_->wait_for_service();
     }
 

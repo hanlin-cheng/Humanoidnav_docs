@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/SaveFloor`
 
-**服务名**: `/map_manager/save_floor`
+**服务名**: `${MM}/save_floor`
 
 ## 描述
 
@@ -27,6 +27,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/save_floor map_manager/srv/SaveFloor \
+ros2 service call ${MM}/save_floor map_manager/srv/SaveFloor \
   "{floor_id: '1F'}"
 ```

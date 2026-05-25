@@ -23,11 +23,11 @@
 
 ```bash
 # 添加虚拟墙
-ros2 service call /map_manager/add_virtual_wall map_manager/srv/AddVirtualWall \
-  "{floor_id: 'F1', 
+ros2 service call ${MM}/add_virtual_wall map_manager/srv/AddVirtualWall \
+  "{floor_id: '1F', 
     wall: {
       id: 1, 
-      floor_id: 'F1',
+      floor_id: '1F',
       start: {x: 0.0, y: 0.0, z: 0.0}, 
       end: {x: 5.0, y: 0.0, z: 0.0}
     }
@@ -42,7 +42,7 @@ from geometry_msgs.msg import Point
 
 wall = VirtualWall()
 wall.id = 1
-wall.floor_id = 'F1'
+wall.floor_id = '1F'
 wall.start = Point(x=0.0, y=0.0, z=0.0)
 wall.end = Point(x=5.0, y=0.0, z=0.0)
 ```

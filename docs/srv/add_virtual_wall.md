@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/AddVirtualWall`
 
-**服务名**: `/map_manager/add_virtual_wall`
+**服务名**: `${MM}/add_virtual_wall`
 
 ## 描述
 
@@ -30,16 +30,16 @@
 
 ```bash
 # 添加水平虚拟墙
-ros2 service call /map_manager/add_virtual_wall map_manager/srv/AddVirtualWall \
-  "{floor_id: 'F1', wall: {id: 1, start: {x: 0.0, y: 5.0, z: 0.0}, end: {x: 10.0, y: 5.0, z: 0.0}}}"
+ros2 service call ${MM}/add_virtual_wall map_manager/srv/AddVirtualWall \
+  "{floor_id: '1F', wall: {id: 1, start: {x: 0.0, y: 5.0, z: 0.0}, end: {x: 10.0, y: 5.0, z: 0.0}}}"
 
 # 添加垂直虚拟墙
-ros2 service call /map_manager/add_virtual_wall map_manager/srv/AddVirtualWall \
-  "{floor_id: 'F1', wall: {id: 2, start: {x: 5.0, y: 0.0, z: 0.0}, end: {x: 5.0, y: 8.0, z: 0.0}}}"
+ros2 service call ${MM}/add_virtual_wall map_manager/srv/AddVirtualWall \
+  "{floor_id: '1F', wall: {id: 2, start: {x: 5.0, y: 0.0, z: 0.0}, end: {x: 5.0, y: 8.0, z: 0.0}}}"
 
 # 添加斜向虚拟墙
-ros2 service call /map_manager/add_virtual_wall map_manager/srv/AddVirtualWall \
-  "{floor_id: 'F1', wall: {id: 3, start: {x: 0.0, y: 0.0, z: 0.0}, end: {x: 5.0, y: 5.0, z: 0.0}}}"
+ros2 service call ${MM}/add_virtual_wall map_manager/srv/AddVirtualWall \
+  "{floor_id: '1F', wall: {id: 3, start: {x: 0.0, y: 0.0, z: 0.0}, end: {x: 5.0, y: 5.0, z: 0.0}}}"
 ```
 
 ### Python 示例
@@ -54,7 +54,7 @@ from rclpy.node import Node
 class VirtualWallManager(Node):
     def __init__(self):
         super().__init__('virtual_wall_manager')
-        self.client = self.create_client(AddVirtualWall, '/map_manager/add_virtual_wall')
+        self.client = self.create_client(AddVirtualWall, '${MM}/add_virtual_wall')
         self.client.wait_for_service()
         self.next_id = 1
 
@@ -86,10 +86,10 @@ rclpy.init()
 manager = VirtualWallManager()
 
 # 添加围栏（4条虚拟墙围成矩形）
-manager.add_wall('F1', (0, 0), (10, 0))   # 底边
-manager.add_wall('F1', (10, 0), (10, 8))  # 右边
-manager.add_wall('F1', (10, 8), (0, 8))   # 顶边
-manager.add_wall('F1', (0, 8), (0, 0))    # 左边
+manager.add_wall('1F', (0, 0), (10, 0))   # 底边
+manager.add_wall('1F', (10, 0), (10, 8))  # 右边
+manager.add_wall('1F', (10, 8), (0, 8))   # 顶边
+manager.add_wall('1F', (0, 8), (0, 0))    # 左边
 
 rclpy.shutdown()
 ```
@@ -105,7 +105,7 @@ class VirtualWallManager : public rclcpp::Node {
 public:
     VirtualWallManager() : Node("virtual_wall_manager"), next_id_(1) {
         client_ = create_client<map_manager::srv::AddVirtualWall>(
-            "/map_manager/add_virtual_wall");
+            "${MM}/add_virtual_wall");
         client_->wait_for_service();
     }
 

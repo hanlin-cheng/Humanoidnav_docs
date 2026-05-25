@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/AddFloor`
 
-**服务名**: `/map_manager/add_floor`
+**服务名**: `${MM}/add_floor`
 
 ## 描述
 
@@ -26,6 +26,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/add_floor map_manager/srv/AddFloor \
+ros2 service call ${MM}/add_floor map_manager/srv/AddFloor \
   "{}"
 ```

@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/AddForbiddenArea`
 
-**服务名**: `/map_manager/add_forbidden_area`
+**服务名**: `${MM}/add_forbidden_area`
 
 ## 描述
 
@@ -31,12 +31,12 @@
 
 ```bash
 # 添加矩形禁区
-ros2 service call /map_manager/add_forbidden_area map_manager/srv/AddForbiddenArea \
-  "{floor_id: 'F1', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 2.0, y: 0.0, z: 0.0}, {x: 2.0, y: 2.0, z: 0.0}, {x: 0.0, y: 2.0, z: 0.0}]}}}"
+ros2 service call ${MM}/add_forbidden_area map_manager/srv/AddForbiddenArea \
+  "{floor_id: '1F', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 2.0, y: 0.0, z: 0.0}, {x: 2.0, y: 2.0, z: 0.0}, {x: 0.0, y: 2.0, z: 0.0}]}}}"
 
 # 添加三角形禁区
-ros2 service call /map_manager/add_forbidden_area map_manager/srv/AddForbiddenArea \
-  "{floor_id: 'F1', area: {id: 2, boundary: {points: [{x: 5.0, y: 5.0, z: 0.0}, {x: 7.0, y: 5.0, z: 0.0}, {x: 6.0, y: 7.0, z: 0.0}]}}}"
+ros2 service call ${MM}/add_forbidden_area map_manager/srv/AddForbiddenArea \
+  "{floor_id: '1F', area: {id: 2, boundary: {points: [{x: 5.0, y: 5.0, z: 0.0}, {x: 7.0, y: 5.0, z: 0.0}, {x: 6.0, y: 7.0, z: 0.0}]}}}"
 ```
 
 ### Python 示例
@@ -53,7 +53,7 @@ class ForbiddenAreaManager(Node):
     def __init__(self):
         super().__init__('forbidden_area_manager')
         self.client = self.create_client(
-            AddForbiddenArea, '/map_manager/add_forbidden_area')
+            AddForbiddenArea, '${MM}/add_forbidden_area')
         self.client.wait_for_service()
         self.next_id = 1
 
@@ -103,13 +103,13 @@ rclpy.init()
 manager = ForbiddenAreaManager()
 
 # 添加矩形禁区
-manager.add_rectangle('F1', 0.0, 0.0, 2.0, 2.0)
+manager.add_rectangle('1F', 0.0, 0.0, 2.0, 2.0)
 
 # 添加自定义多边形禁区
-manager.add_area('F1', [(5.0, 5.0), (7.0, 5.0), (8.0, 7.0), (6.0, 8.0), (4.0, 7.0)])
+manager.add_area('1F', [(5.0, 5.0), (7.0, 5.0), (8.0, 7.0), (6.0, 8.0), (4.0, 7.0)])
 
 # 添加近似圆形禁区
-manager.add_circle_approx('F1', 10.0, 10.0, 1.5, segments=12)
+manager.add_circle_approx('1F', 10.0, 10.0, 1.5, segments=12)
 
 rclpy.shutdown()
 ```
@@ -126,7 +126,7 @@ class ForbiddenAreaManager : public rclcpp::Node {
 public:
     ForbiddenAreaManager() : Node("forbidden_area_manager"), next_id_(1) {
         client_ = create_client<map_manager::srv::AddForbiddenArea>(
-            "/map_manager/add_forbidden_area");
+            "${MM}/add_forbidden_area");
         client_->wait_for_service();
     }
 

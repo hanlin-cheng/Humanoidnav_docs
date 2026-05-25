@@ -2,7 +2,7 @@
 
 **服务类型**: `map_manager/srv/RemoveSemanticObject`
 
-**服务名**: `/map_manager/remove_semantic_object`
+**服务名**: `${MM}/remove_semantic_object`
 
 ## 描述
 
@@ -27,6 +27,6 @@
 ### 命令行调用
 
 ```bash
-ros2 service call /map_manager/remove_semantic_object map_manager/srv/RemoveSemanticObject \
+ros2 service call ${MM}/remove_semantic_object map_manager/srv/RemoveSemanticObject \
   "{floor_id: '1F', object_id: ''}"
 ```
