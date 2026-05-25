@@ -232,8 +232,6 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#938-clear_floor">9.3.8 /clear_floor (服务)</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#939-current_floor">9.3.9 /current_floor (话题)</a>
-    </li>
         </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#94-poi">9.4 POI 管理服务</a>
@@ -2163,19 +2161,13 @@ ros2 service call ${MM}/load_composite_map map_manager/srv/LoadCompositeMap ...
 </thead>
 <tbody>
 <tr>
-<td><code>/current_floor</code></td>
-<td><code>/robot1/current_floor</code></td>
-</tr>
-<tr>
-<td><code>/costmap_filter_info</code></td>
-<td><code>/robot1/costmap_filter_info</code></td>
-</tr>
-<tr>
-<td><code>/keepout_filter_mask</code></td>
-<td><code>/robot1/keepout_filter_mask</code></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
+<p>| <code>/costmap_filter_info</code> | <code>/robot1/costmap_filter_info</code> |
+| <code>/keepout_filter_mask</code> | <code>/robot1/keepout_filter_mask</code> |</p>
 <p><strong>启动命令：</strong></p>
 <pre><code class="language-bash"># 单机器人（默认）
 ros2 launch map_manager map_manager.launch.py
@@ -2866,7 +2858,6 @@ private:
 <h4 id="932-get_current_floor">9.3.2 /get_current_floor (服务)</h4>
 <blockquote>
 <p>获取当前楼层</p>
-<p><strong>注意</strong>: 此服务接口已定义但当前版本未注册，请使用 <a href="#837-current_floor-话题">8.3.7 /current_floor 话题</a> 订阅当前楼层信息。</p>
 </blockquote>
 <p><strong>服务类型</strong>: <code>map_manager/srv/GetCurrentFloor</code> | <a href="../srv/get_current_floor/">详细文档</a></p>
 <p><strong>响应</strong>:</p>
@@ -3027,11 +3018,11 @@ private:
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash"># 直接切换楼层
 ros2 service call ${MM}/switch_floor map_manager/srv/SwitchFloor \
-  &quot;{floor_id: 'F2', initial_pose: {x: 0.0, y: 0.0, theta: 0.0}, use_transition: false}&quot;
+  &quot;{floor_id: '2F', initial_pose: {x: 0.0, y: 0.0, theta: 0.0}, use_transition: false}&quot;
 
 # 使用电梯过渡点切换
 ros2 service call ${MM}/switch_floor map_manager/srv/SwitchFloor \
-  &quot;{floor_id: 'F2', use_transition: true, transition_id: 'elevator_1'}&quot;
+  &quot;{floor_id: '2F', use_transition: true, transition_id: 'elevator_1'}&quot;
 </code></pre>
 <h4 id="934-add_floor">9.3.4 /add_floor (服务)</h4>
 <blockquote>
@@ -3542,16 +3533,6 @@ rclpy.init()
 clearer = FloorClearer()
 clearer.clear_floor('1F')
 </code></pre>
-<h4 id="939-current_floor">9.3.9 /current_floor (话题)</h4>
-<blockquote>
-<p>发布当前楼层 ID</p>
-</blockquote>
-<p><strong>消息类型</strong>: <code>std_msgs/msg/String</code></p>
-<p><strong>QoS</strong>: transient_local, reliable</p>
-<blockquote>
-<p><strong>命名空间说明</strong>: 使用命名空间时，话题路径变为 <code>/&lt;namespace&gt;/current_floor</code>（相对话题，自动跟随节点命名空间）。</p>
-</blockquote>
-<hr />
 <h3 id="94-poi">9.4 POI 管理服务</h3>
 <h4 id="941-add_poi">9.4.1 /add_poi (服务)</h4>
 <blockquote>
@@ -3599,7 +3580,7 @@ clearer.clear_floor('1F')
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/add_poi map_manager/srv/AddPOI \
-  &quot;{poi: {id: 'charging_1', name: 'Charging Station', type: 'charging_station', floor_id: 'F1', pose: {x: 5.0, y: 3.0, theta: 1.57}}}&quot;
+  &quot;{poi: {id: 'charging_1', name: 'Charging Station', type: 'charging_station', floor_id: '1F', pose: {x: 5.0, y: 3.0, theta: 1.57}}}&quot;
 </code></pre>
 <p><strong>Python调用</strong>:</p>
 <pre><code class="language-python">from map_manager.srv import AddPOI
@@ -3633,7 +3614,7 @@ class POIManager(Node):
 rclpy.init()
 manager = POIManager()
 success = manager.add_poi('charging_1', 'Charging Station', 
-                          'charging_station', 'F1', 5.0, 3.0, 1.57)
+                          'charging_station', '1F', 5.0, 3.0, 1.57)
 print(f&quot;POI added: {success}&quot;)
 </code></pre>
 <p><strong>C++调用</strong>:</p>
@@ -3727,8 +3708,8 @@ private:
 <pre><code class="language-bash"># 列出所有楼层的 POI
 ros2 service call ${MM}/list_pois map_manager/srv/ListPOIs &quot;{floor_id: ''}&quot;
 
-# 列出 F1 楼层的 POI
-ros2 service call ${MM}/list_pois map_manager/srv/ListPOIs &quot;{floor_id: 'F1'}&quot;
+# 列出 1F 楼层的 POI
+ros2 service call ${MM}/list_pois map_manager/srv/ListPOIs &quot;{floor_id: '1F'}&quot;
 </code></pre>
 <p><strong>Python调用</strong>:</p>
 <pre><code class="language-python">from map_manager.srv import ListPOIs
@@ -3760,7 +3741,7 @@ class POILister(Node):
 # 使用示例
 rclpy.init()
 lister = POILister()
-lister.list_pois('F1')  # 列出 F1 的 POI
+lister.list_pois('1F')  # 列出 1F 的 POI
 </code></pre>
 <p><strong>C++调用</strong>:</p>
 <pre><code class="language-cpp">#include &lt;rclcpp/rclcpp.hpp&gt;
@@ -3853,7 +3834,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/get_poi map_manager/srv/GetPOI \
-  &quot;{floor_id: 'F1', id: 'charging_1'}&quot;
+  &quot;{floor_id: '1F', id: 'charging_1'}&quot;
 </code></pre>
 <h4 id="944-update_poi">9.4.4 /update_poi (服务)</h4>
 <blockquote>
@@ -3901,7 +3882,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/update_poi map_manager/srv/UpdatePOI \
-  &quot;{poi: {id: 'charging_1', name: 'Main Charger', type: 'charging_station', floor_id: 'F1', pose: {x: 5.5, y: 3.0, theta: 1.57}}}&quot;
+  &quot;{poi: {id: 'charging_1', name: 'Main Charger', type: 'charging_station', floor_id: '1F', pose: {x: 5.5, y: 3.0, theta: 1.57}}}&quot;
 </code></pre>
 <h4 id="945-remove_poi">9.4.5 /remove_poi (服务)</h4>
 <blockquote>
@@ -3954,7 +3935,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/remove_poi map_manager/srv/RemovePOI \
-  &quot;{floor_id: 'F1', id: 'charging_1'}&quot;
+  &quot;{floor_id: '1F', id: 'charging_1'}&quot;
 </code></pre>
 <h4 id="946-remove_all_pois">9.4.6 /remove_all_pois (服务)</h4>
 <blockquote>
@@ -4002,7 +3983,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/remove_all_pois map_manager/srv/RemoveAllPOIs \
-  &quot;{floor_id: 'F1'}&quot;
+  &quot;{floor_id: '1F'}&quot;
 </code></pre>
 <hr />
 <h3 id="95">9.5 虚拟墙管理服务</h3>
@@ -4062,7 +4043,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/add_virtual_wall map_manager/srv/AddVirtualWall \
-  &quot;{floor_id: 'F1', wall: {id: 1, start: {x: 0.0, y: 0.0, z: 0.0}, end: {x: 2.0, y: 0.0, z: 0.0}}}&quot;
+  &quot;{floor_id: '1F', wall: {id: 1, start: {x: 0.0, y: 0.0, z: 0.0}, end: {x: 2.0, y: 0.0, z: 0.0}}}&quot;
 </code></pre>
 <p><strong>Python调用</strong>:</p>
 <pre><code class="language-python">from map_manager.srv import AddVirtualWall
@@ -4102,7 +4083,7 @@ class VirtualWallManager(Node):
 rclpy.init()
 manager = VirtualWallManager()
 # 添加一条从 (0,0) 到 (5,0) 的虚拟墙
-manager.add_wall('F1', 1, 0.0, 0.0, 5.0, 0.0)
+manager.add_wall('1F', 1, 0.0, 0.0, 5.0, 0.0)
 </code></pre>
 <p><strong>C++调用</strong>:</p>
 <pre><code class="language-cpp">#include &lt;rclcpp/rclcpp.hpp&gt;
@@ -4202,8 +4183,8 @@ private:
 <pre><code class="language-bash"># 列出所有楼层的虚拟墙
 ros2 service call ${MM}/list_virtual_walls map_manager/srv/ListVirtualWalls &quot;{floor_id: ''}&quot;
 
-# 列出 F1 楼层的虚拟墙
-ros2 service call ${MM}/list_virtual_walls map_manager/srv/ListVirtualWalls &quot;{floor_id: 'F1'}&quot;
+# 列出 1F 楼层的虚拟墙
+ros2 service call ${MM}/list_virtual_walls map_manager/srv/ListVirtualWalls &quot;{floor_id: '1F'}&quot;
 </code></pre>
 <p><strong>Python调用</strong>:</p>
 <pre><code class="language-python">from map_manager.srv import ListVirtualWalls
@@ -4233,7 +4214,7 @@ class VirtualWallLister(Node):
 
 rclpy.init()
 lister = VirtualWallLister()
-lister.list_walls('F1')
+lister.list_walls('1F')
 </code></pre>
 <p><strong>C++调用</strong>:</p>
 <pre><code class="language-cpp">#include &lt;rclcpp/rclcpp.hpp&gt;
@@ -4327,7 +4308,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/get_virtual_wall map_manager/srv/GetVirtualWall \
-  &quot;{floor_id: 'F1', id: 1}&quot;
+  &quot;{floor_id: '1F', id: 1}&quot;
 </code></pre>
 <h4 id="954-update_virtual_wall">9.5.4 /update_virtual_wall (服务)</h4>
 <blockquote>
@@ -4375,7 +4356,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/update_virtual_wall map_manager/srv/UpdateVirtualWall \
-  &quot;{wall: {id: 1, floor_id: 'F1', start: {x: 0.0, y: 0.0, z: 0.0}, end: {x: 3.0, y: 0.0, z: 0.0}}}&quot;
+  &quot;{wall: {id: 1, floor_id: '1F', start: {x: 0.0, y: 0.0, z: 0.0}, end: {x: 3.0, y: 0.0, z: 0.0}}}&quot;
 </code></pre>
 <h4 id="955-remove_virtual_wall">9.5.5 /remove_virtual_wall (服务)</h4>
 <blockquote>
@@ -4428,7 +4409,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/remove_virtual_wall map_manager/srv/RemoveVirtualWall \
-  &quot;{floor_id: 'F1', wall_id: 1}&quot;
+  &quot;{floor_id: '1F', wall_id: 1}&quot;
 </code></pre>
 <h4 id="956-remove_virtual_walls">9.5.6 /remove_virtual_walls (服务)</h4>
 <blockquote>
@@ -4481,7 +4462,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/remove_virtual_walls map_manager/srv/RemoveVirtualWalls \
-  &quot;{floor_id: 'F1'}&quot;
+  &quot;{floor_id: '1F'}&quot;
 </code></pre>
 <hr />
 <h3 id="96">9.6 禁区管理服务</h3>
@@ -4547,7 +4528,7 @@ private:
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash"># 添加正方形禁区（2m × 2m）
 ros2 service call ${MM}/add_forbidden_area map_manager/srv/AddForbiddenArea \
-  &quot;{floor_id: 'F1', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 2.0, y: 0.0, z: 0.0}, {x: 2.0, y: 2.0, z: 0.0}, {x: 0.0, y: 2.0, z: 0.0}]}}}&quot;
+  &quot;{floor_id: '1F', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 2.0, y: 0.0, z: 0.0}, {x: 2.0, y: 2.0, z: 0.0}, {x: 0.0, y: 2.0, z: 0.0}]}}}&quot;
 </code></pre>
 <p><strong>Python调用</strong>:</p>
 <pre><code class="language-python">from map_manager.srv import AddForbiddenArea
@@ -4591,9 +4572,9 @@ class ForbiddenAreaManager(Node):
 rclpy.init()
 manager = ForbiddenAreaManager()
 # 添加正方形禁区
-manager.add_forbidden_area('F1', 1, [(0.0, 0.0), (2.0, 0.0), (2.0, 2.0), (0.0, 2.0)])
+manager.add_forbidden_area('1F', 1, [(0.0, 0.0), (2.0, 0.0), (2.0, 2.0), (0.0, 2.0)])
 # 添加三角形禁区
-manager.add_forbidden_area('F1', 2, [(5.0, 5.0), (7.0, 5.0), (6.0, 7.0)])
+manager.add_forbidden_area('1F', 2, [(5.0, 5.0), (7.0, 5.0), (6.0, 7.0)])
 </code></pre>
 <p><strong>C++调用</strong>:</p>
 <pre><code class="language-cpp">#include &lt;rclcpp/rclcpp.hpp&gt;
@@ -4648,7 +4629,7 @@ int main(int argc, char** argv) {
     rclcpp::init(argc, argv);
     auto manager = std::make_shared&lt;ForbiddenAreaManager&gt;();
     // 添加正方形禁区
-    manager-&gt;add_forbidden_area(&quot;F1&quot;, 1, {{0.0, 0.0}, {2.0, 0.0}, {2.0, 2.0}, {0.0, 2.0}});
+    manager-&gt;add_forbidden_area(&quot;1F&quot;, 1, {{0.0, 0.0}, {2.0, 0.0}, {2.0, 2.0}, {0.0, 2.0}});
     rclcpp::shutdown();
     return 0;
 }
@@ -4709,7 +4690,7 @@ int main(int argc, char** argv) {
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/list_forbidden_areas map_manager/srv/ListForbiddenAreas \
-  &quot;{floor_id: 'F1'}&quot;
+  &quot;{floor_id: '1F'}&quot;
 </code></pre>
 <p><strong>Python调用</strong>:</p>
 <pre><code class="language-python">from map_manager.srv import ListForbiddenAreas
@@ -4742,7 +4723,7 @@ class ForbiddenAreaLister(Node):
 
 rclpy.init()
 lister = ForbiddenAreaLister()
-lister.list_areas('F1')
+lister.list_areas('1F')
 </code></pre>
 <p><strong>C++调用</strong>:</p>
 <pre><code class="language-cpp">#include &lt;rclcpp/rclcpp.hpp&gt;
@@ -4843,7 +4824,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/get_forbidden_area map_manager/srv/GetForbiddenArea \
-  &quot;{floor_id: 'F1', id: 1}&quot;
+  &quot;{floor_id: '1F', id: 1}&quot;
 </code></pre>
 <h4 id="964-update_forbidden_area">9.6.4 /update_forbidden_area (服务)</h4>
 <blockquote>
@@ -4901,7 +4882,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/update_forbidden_area map_manager/srv/UpdateForbiddenArea \
-  &quot;{floor_id: 'F1', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 3.0, y: 0.0, z: 0.0}, {x: 3.0, y: 3.0, z: 0.0}, {x: 0.0, y: 3.0, z: 0.0}]}}}&quot;
+  &quot;{floor_id: '1F', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 3.0, y: 0.0, z: 0.0}, {x: 3.0, y: 3.0, z: 0.0}, {x: 0.0, y: 3.0, z: 0.0}]}}}&quot;
 </code></pre>
 <h4 id="965-remove_forbidden_area">9.6.5 /remove_forbidden_area (服务)</h4>
 <blockquote>
@@ -4959,12 +4940,11 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/remove_forbidden_area map_manager/srv/RemoveForbiddenArea \
-  &quot;{floor_id: 'F1', area_id: 1}&quot;
+  &quot;{floor_id: '1F', area_id: 1}&quot;
 </code></pre>
 <h4 id="966-remove_forbidden_areas">9.6.6 /remove_forbidden_areas (服务)</h4>
 <blockquote>
-<p>批量删除禁区（删除指定楼层所有禁区）</p>
-<p><strong>注意</strong>: 此服务接口已定义但当前版本未注册。请使用 <a href="#967-remove_all_forbidden_areas-服务">9.6.7 /remove_all_forbidden_areas</a> 代替，功能相同。</p>
+<p>按楼层批量删除禁区（空 <code>floor_id</code> 表示所有楼层）</p>
 </blockquote>
 <p><strong>服务类型</strong>: <code>map_manager/srv/RemoveForbiddenAreas</code></p>
 <p><strong>请求</strong>:</p>
@@ -5013,30 +4993,14 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/remove_forbidden_areas map_manager/srv/RemoveForbiddenAreas \
-  &quot;{floor_id: 'F1'}&quot;
+  &quot;{floor_id: '1F'}&quot;
 </code></pre>
 <h4 id="967-remove_all_forbidden_areas">9.6.7 /remove_all_forbidden_areas (服务)</h4>
 <blockquote>
-<p>删除所有禁区（与 remove_forbidden_areas 功能相同）</p>
+<p>无条件删除所有楼层的全部禁区。请求无字段。</p>
 </blockquote>
 <p><strong>服务类型</strong>: <code>map_manager/srv/RemoveAllForbiddenAreas</code></p>
-<p><strong>请求</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>floor_id</td>
-<td>string</td>
-<td>楼层 ID（空表示所有楼层）</td>
-</tr>
-</tbody>
-</table>
+<p><strong>请求</strong>: 无字段</p>
 <p><strong>响应</strong>:</p>
 <table>
 <thead>
@@ -5064,6 +5028,9 @@ private:
 </tr>
 </tbody>
 </table>
+<p><strong>调用示例</strong>:</p>
+<pre><code class="language-bash">ros2 service call ${MM}/remove_all_forbidden_areas map_manager/srv/RemoveAllForbiddenAreas &quot;{}&quot;
+</code></pre>
 <hr />
 <h3 id="97">9.7 限速区管理服务</h3>
 <h4 id="971-add_dangerous_area">9.7.1 /add_dangerous_area (服务)</h4>
@@ -5123,7 +5090,7 @@ private:
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash"># 添加限速区（3m × 3m，限速 0.3 m/s）
 ros2 service call ${MM}/add_dangerous_area map_manager/srv/AddDangerousArea \
-  &quot;{floor_id: 'F1', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 3.0, y: 0.0, z: 0.0}, {x: 3.0, y: 3.0, z: 0.0}, {x: 0.0, y: 3.0, z: 0.0}]}, speed_limit: 0.3}}&quot;
+  &quot;{floor_id: '1F', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 3.0, y: 0.0, z: 0.0}, {x: 3.0, y: 3.0, z: 0.0}, {x: 0.0, y: 3.0, z: 0.0}]}, speed_limit: 0.3}}&quot;
 </code></pre>
 <p><strong>Python调用</strong>:</p>
 <pre><code class="language-python">from map_manager.srv import AddDangerousArea
@@ -5170,7 +5137,7 @@ class DangerousAreaManager(Node):
 rclpy.init()
 manager = DangerousAreaManager()
 # 添加电梯附近限速区（限速 0.2 m/s）
-manager.add_dangerous_area('F1', 1, 
+manager.add_dangerous_area('1F', 1, 
     [(5.0, 5.0), (8.0, 5.0), (8.0, 8.0), (5.0, 8.0)], 0.2)
 </code></pre>
 <p><strong>C++调用</strong>:</p>
@@ -5226,7 +5193,7 @@ int main(int argc, char** argv) {
     rclcpp::init(argc, argv);
     auto manager = std::make_shared&lt;DangerousAreaManager&gt;();
     // 添加电梯附近限速区
-    manager-&gt;add_dangerous_area(&quot;F1&quot;, 1, 
+    manager-&gt;add_dangerous_area(&quot;1F&quot;, 1, 
         {{5.0, 5.0}, {8.0, 5.0}, {8.0, 8.0}, {5.0, 8.0}}, 0.2f);
     rclcpp::shutdown();
     return 0;
@@ -5288,7 +5255,7 @@ int main(int argc, char** argv) {
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/list_dangerous_areas map_manager/srv/ListDangerousAreas \
-  &quot;{floor_id: 'F1'}&quot;
+  &quot;{floor_id: '1F'}&quot;
 </code></pre>
 <p><strong>Python调用</strong>:</p>
 <pre><code class="language-python">from map_manager.srv import ListDangerousAreas
@@ -5320,7 +5287,7 @@ class DangerousAreaLister(Node):
 
 rclpy.init()
 lister = DangerousAreaLister()
-lister.list_areas('F1')
+lister.list_areas('1F')
 </code></pre>
 <p><strong>C++调用</strong>:</p>
 <pre><code class="language-cpp">#include &lt;rclcpp/rclcpp.hpp&gt;
@@ -5423,7 +5390,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/get_dangerous_area map_manager/srv/GetDangerousArea \
-  &quot;{floor_id: 'F1', id: 1}&quot;
+  &quot;{floor_id: '1F', id: 1}&quot;
 </code></pre>
 <h4 id="974-update_dangerous_area">9.7.4 /update_dangerous_area (服务)</h4>
 <blockquote>
@@ -5476,7 +5443,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/update_dangerous_area map_manager/srv/UpdateDangerousArea \
-  &quot;{floor_id: 'F1', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 4.0, y: 0.0, z: 0.0}, {x: 4.0, y: 4.0, z: 0.0}, {x: 0.0, y: 4.0, z: 0.0}]}, speed_limit: 0.5}}&quot;
+  &quot;{floor_id: '1F', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 4.0, y: 0.0, z: 0.0}, {x: 4.0, y: 4.0, z: 0.0}, {x: 0.0, y: 4.0, z: 0.0}]}, speed_limit: 0.5}}&quot;
 </code></pre>
 <h4 id="975-remove_dangerous_area">9.7.5 /remove_dangerous_area (服务)</h4>
 <blockquote>
@@ -5529,7 +5496,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/remove_dangerous_area map_manager/srv/RemoveDangerousArea \
-  &quot;{floor_id: 'F1', area_id: 1}&quot;
+  &quot;{floor_id: '1F', area_id: 1}&quot;
 </code></pre>
 <h4 id="976-remove_all_dangerous_areas">9.7.6 /remove_all_dangerous_areas (服务)</h4>
 <blockquote>
@@ -5582,7 +5549,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/remove_all_dangerous_areas map_manager/srv/RemoveAllDangerousAreas \
-  &quot;{floor_id: 'F1'}&quot;
+  &quot;{floor_id: '1F'}&quot;
 </code></pre>
 <hr />
 <h3 id="98">9.8 房间管理服务</h3>
@@ -5642,7 +5609,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/add_room map_manager/srv/AddRoom \
-  &quot;{floor_id: 'F1', room: {id: 'room_101', name: 'Office 101', type: 'office', boundary: [{x: 0.0, y: 0.0, z: 0.0}, {x: 5.0, y: 0.0, z: 0.0}, {x: 5.0, y: 4.0, z: 0.0}, {x: 0.0, y: 4.0, z: 0.0}], floor_height: 0.0, ceiling_height: 2.8}}&quot;
+  &quot;{floor_id: '1F', room: {id: 'room_101', name: 'Office 101', type: 'office', boundary: [{x: 0.0, y: 0.0, z: 0.0}, {x: 5.0, y: 0.0, z: 0.0}, {x: 5.0, y: 4.0, z: 0.0}, {x: 0.0, y: 4.0, z: 0.0}], floor_height: 0.0, ceiling_height: 2.8}}&quot;
 </code></pre>
 <p><strong>Python调用</strong>:</p>
 <pre><code class="language-python">from map_manager.srv import AddRoom
@@ -5687,7 +5654,7 @@ class RoomManager(Node):
 rclpy.init()
 manager = RoomManager()
 # 添加办公室（5m × 4m）
-manager.add_room('F1', 'room_101', 'Office 101', 'office',
+manager.add_room('1F', 'room_101', 'Office 101', 'office',
                  [(0.0, 0.0), (5.0, 0.0), (5.0, 4.0), (0.0, 4.0)])
 </code></pre>
 <p><strong>C++调用</strong>:</p>
@@ -5789,7 +5756,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/list_rooms map_manager/srv/ListRooms \
-  &quot;{floor_id: 'F1'}&quot;
+  &quot;{floor_id: '1F'}&quot;
 </code></pre>
 <h4 id="983-get_room">9.8.3 /get_room (服务)</h4>
 <blockquote>
@@ -5847,7 +5814,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/get_room map_manager/srv/GetRoom \
-  &quot;{floor_id: 'F1', id: 'room_101'}&quot;
+  &quot;{floor_id: '1F', id: 'room_101'}&quot;
 </code></pre>
 <h4 id="984-update_room">9.8.4 /update_room (服务)</h4>
 <blockquote>
@@ -5900,7 +5867,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/update_room map_manager/srv/UpdateRoom \
-  &quot;{floor_id: 'F1', room: {id: 'room_101', name: 'Meeting Room 101', type: 'meeting_room', boundary: [{x: 0.0, y: 0.0, z: 0.0}, {x: 6.0, y: 0.0, z: 0.0}, {x: 6.0, y: 5.0, z: 0.0}, {x: 0.0, y: 5.0, z: 0.0}]}}&quot;
+  &quot;{floor_id: '1F', room: {id: 'room_101', name: 'Meeting Room 101', type: 'meeting_room', boundary: [{x: 0.0, y: 0.0, z: 0.0}, {x: 6.0, y: 0.0, z: 0.0}, {x: 6.0, y: 5.0, z: 0.0}, {x: 0.0, y: 5.0, z: 0.0}]}}&quot;
 </code></pre>
 <h4 id="985-remove_room">9.8.5 /remove_room (服务)</h4>
 <blockquote>
@@ -5958,7 +5925,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/remove_room map_manager/srv/RemoveRoom \
-  &quot;{floor_id: 'F1', room_id: 'room_101'}&quot;
+  &quot;{floor_id: '1F', room_id: 'room_101'}&quot;
 </code></pre>
 <h4 id="986-remove_all_rooms">9.8.6 /remove_all_rooms (服务)</h4>
 <blockquote>
@@ -6011,7 +5978,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/remove_all_rooms map_manager/srv/RemoveAllRooms \
-  &quot;{floor_id: 'F1'}&quot;
+  &quot;{floor_id: '1F'}&quot;
 </code></pre>
 <hr />
 <h3 id="99">9.9 语义对象管理服务</h3>
@@ -6071,7 +6038,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/add_semantic_object map_manager/srv/AddSemanticObject \
-  &quot;{floor_id: 'F1', object: {id: 'desk_001', name: 'Office Desk', type: 'desk', category: 'furniture', pose: {position: {x: 2.0, y: 3.0, z: 0.0}, orientation: {w: 1.0}}, dimensions: {x: 1.4, y: 0.7, z: 0.75}, is_static: true}}&quot;
+  &quot;{floor_id: '1F', object: {id: 'desk_001', name: 'Office Desk', type: 'desk', category: 'furniture', pose: {position: {x: 2.0, y: 3.0, z: 0.0}, orientation: {w: 1.0}}, dimensions: {x: 1.4, y: 0.7, z: 0.75}, is_static: true}}&quot;
 </code></pre>
 <p><strong>Python调用</strong>:</p>
 <pre><code class="language-python">from map_manager.srv import AddSemanticObject
@@ -6115,7 +6082,7 @@ class SemanticObjectManager(Node):
 rclpy.init()
 manager = SemanticObjectManager()
 # 添加办公桌（1.4m × 0.7m × 0.75m）
-manager.add_object('F1', 'desk_001', 'Office Desk', 'desk', 'furniture',
+manager.add_object('1F', 'desk_001', 'Office Desk', 'desk', 'furniture',
                    2.0, 3.0, 0.0, 1.4, 0.7, 0.75, True)
 </code></pre>
 <p><strong>C++调用</strong>:</p>
@@ -6223,7 +6190,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/list_semantic_objects map_manager/srv/ListSemanticObjects \
-  &quot;{floor_id: 'F1', object_type: 'desk'}&quot;
+  &quot;{floor_id: '1F', object_type: 'desk'}&quot;
 </code></pre>
 <h4 id="993-get_semantic_object">9.9.3 /get_semantic_object (服务)</h4>
 <blockquote>
@@ -6281,7 +6248,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/get_semantic_object map_manager/srv/GetSemanticObject \
-  &quot;{floor_id: 'F1', id: 'desk_001'}&quot;
+  &quot;{floor_id: '1F', id: 'desk_001'}&quot;
 </code></pre>
 <h4 id="994-update_semantic_object">9.9.4 /update_semantic_object (服务)</h4>
 <blockquote>
@@ -6334,7 +6301,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/update_semantic_object map_manager/srv/UpdateSemanticObject \
-  &quot;{floor_id: 'F1', object: {id: 'desk_001', name: 'Executive Desk', type: 'desk', category: 'furniture', pose: {position: {x: 3.0, y: 4.0, z: 0.0}, orientation: {w: 1.0}}, dimensions: {x: 1.6, y: 0.8, z: 0.75}, is_static: true}}&quot;
+  &quot;{floor_id: '1F', object: {id: 'desk_001', name: 'Executive Desk', type: 'desk', category: 'furniture', pose: {position: {x: 3.0, y: 4.0, z: 0.0}, orientation: {w: 1.0}}, dimensions: {x: 1.6, y: 0.8, z: 0.75}, is_static: true}}&quot;
 </code></pre>
 <h4 id="995-remove_semantic_object">9.9.5 /remove_semantic_object (服务)</h4>
 <blockquote>
@@ -6387,7 +6354,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/remove_semantic_object map_manager/srv/RemoveSemanticObject \
-  &quot;{floor_id: 'F1', object_id: 'desk_001'}&quot;
+  &quot;{floor_id: '1F', object_id: 'desk_001'}&quot;
 </code></pre>
 <h4 id="996-remove_all_semantic_objects">9.9.6 /remove_all_semantic_objects (服务)</h4>
 <blockquote>
@@ -6445,7 +6412,7 @@ private:
 </table>
 <p><strong>调用示例</strong>:</p>
 <pre><code class="language-bash">ros2 service call ${MM}/remove_all_semantic_objects map_manager/srv/RemoveAllSemanticObjects \
-  &quot;{floor_id: 'F1', object_type: ''}&quot;
+  &quot;{floor_id: '1F', object_type: ''}&quot;
 </code></pre>
 <hr />
 <h3 id="910-python">9.10 Python 完整示例</h3>
@@ -6578,19 +6545,19 @@ def main():
         print(f&quot;  楼层: {floor.floor_id} ({floor.name})&quot;)
 
     # 切换楼层
-    client.switch_floor('F2', x=1.0, y=2.0, theta=0.0)
+    client.switch_floor('2F', x=1.0, y=2.0, theta=0.0)
 
     # 添加 POI
-    client.add_poi('charging_1', '充电站', 'charging_station', 'F1', 5.0, 3.0, 1.57)
+    client.add_poi('charging_1', '充电站', 'charging_station', '1F', 5.0, 3.0, 1.57)
 
     # 添加虚拟墙
-    client.add_virtual_wall('F1', 1, (0.0, 0.0), (2.0, 0.0))
+    client.add_virtual_wall('1F', 1, (0.0, 0.0), (2.0, 0.0))
 
     # 添加禁区
-    client.add_forbidden_area('F1', 1, [(0.0, 0.0), (2.0, 0.0), (2.0, 2.0), (0.0, 2.0)])
+    client.add_forbidden_area('1F', 1, [(0.0, 0.0), (2.0, 0.0), (2.0, 2.0), (0.0, 2.0)])
 
     # 添加限速区
-    client.add_dangerous_area('F1', 1, [(5.0, 5.0), (8.0, 5.0), (8.0, 8.0), (5.0, 8.0)], 0.3)
+    client.add_dangerous_area('1F', 1, [(5.0, 5.0), (8.0, 5.0), (8.0, 8.0), (5.0, 8.0)], 0.3)
 
     # 保存地图
     client.save_map('/opt/fftai/Navigation/Map/office_updated', compress=True)
@@ -6761,12 +6728,6 @@ if __name__ == '__main__':
 <td>fourier_msgs/EventsInfo</td>
 <td>发布</td>
 <td>系统事件通知</td>
-</tr>
-<tr>
-<td>/current_floor</td>
-<td>std_msgs/String</td>
-<td>发布</td>
-<td>当前楼层 ID（命名空间时：<code>/&lt;ns&gt;/current_floor</code>）</td>
 </tr>
 </tbody>
 </table>

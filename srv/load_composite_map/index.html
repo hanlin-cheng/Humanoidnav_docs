@@ -301,7 +301,7 @@
               
                 <h1 id="loadcompositemap">LoadCompositeMap</h1>
 <p><strong>服务类型</strong>: <code>map_manager/srv/LoadCompositeMap</code></p>
-<p><strong>服务名</strong>: <code>/map_manager/load_composite_map</code></p>
+<p><strong>服务名</strong>: <code>${MM}/load_composite_map</code></p>
 <h2 id="_1">描述</h2>
 <p>加载复合地图（多楼层地图）。支持目录格式和 <code>.mmap</code> 压缩包格式。
 加载后会自动初始化所有楼层的定位层、导航层和语义层。</p>
@@ -352,11 +352,11 @@
 <h2 id="_2">使用示例</h2>
 <h3 id="_3">命令行调用</h3>
 <pre><code class="language-bash"># 加载目录格式地图
-ros2 service call /map_manager/load_composite_map map_manager/srv/LoadCompositeMap \
+ros2 service call ${MM}/load_composite_map map_manager/srv/LoadCompositeMap \
   &quot;{map_path: '/opt/fftai/Navigation/Map/office'}&quot;
 
 # 加载压缩包格式地图
-ros2 service call /map_manager/load_composite_map map_manager/srv/LoadCompositeMap \
+ros2 service call ${MM}/load_composite_map map_manager/srv/LoadCompositeMap \
   &quot;{map_path: '/opt/fftai/Navigation/Map/office.mmap'}&quot;
 </code></pre>
 <h3 id="python">Python 示例</h3>
@@ -368,7 +368,7 @@ class MapLoader(Node):
     def __init__(self):
         super().__init__('map_loader')
         self.client = self.create_client(
-            LoadCompositeMap, '/map_manager/load_composite_map')
+            LoadCompositeMap, '${MM}/load_composite_map')
         self.client.wait_for_service()
 
     def load(self, path: str):
@@ -402,7 +402,7 @@ class MapLoader : public rclcpp::Node {
 public:
     MapLoader() : Node(&quot;map_loader&quot;) {
         client_ = create_client&lt;map_manager::srv::LoadCompositeMap&gt;(
-            &quot;/map_manager/load_composite_map&quot;);
+            &quot;${MM}/load_composite_map&quot;);
         client_-&gt;wait_for_service();
     }
 
@@ -432,12 +432,12 @@ private:
 <pre><code>map_directory/
 ├── map_info.json           # 复合地图元信息
 ├── floors/
-│   ├── F1/
+│   ├── 1F/
 │   │   ├── localization/   # 定位层 (3D点云)
 │   │   ├── navigation/     # 导航层 (2D栅格)
 │   │   ├── semantic/       # 语义层 (POI等)
 │   │   └── virtual/        # 虚拟层 (虚拟墙等)
-│   └── F2/
+│   └── 2F/
 │       └── ...
 └── transitions.json        # 楼层过渡点
 </code></pre>

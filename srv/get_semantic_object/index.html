@@ -287,7 +287,7 @@
               
                 <h1 id="getsemanticobject">GetSemanticObject</h1>
 <p><strong>服务类型</strong>: <code>map_manager/srv/GetSemanticObject</code></p>
-<p><strong>服务名</strong>: <code>/map_manager/get_semantic_object</code></p>
+<p><strong>服务名</strong>: <code>${MM}/get_semantic_object</code></p>
 <h2 id="_1">描述</h2>
 <p>获取指定语义对象信息</p>
 <h2 id="request">请求 (Request)</h2>
@@ -341,7 +341,7 @@
 </table>
 <h2 id="_2">使用示例</h2>
 <h3 id="_3">命令行调用</h3>
-<pre><code class="language-bash">ros2 service call /map_manager/get_semantic_object map_manager/srv/GetSemanticObject \
+<pre><code class="language-bash">ros2 service call ${MM}/get_semantic_object map_manager/srv/GetSemanticObject \
   &quot;{floor_id: '1F', id: 'example_id'}&quot;
 </code></pre>
               

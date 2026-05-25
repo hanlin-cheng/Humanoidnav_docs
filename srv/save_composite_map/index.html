@@ -297,7 +297,7 @@
               
                 <h1 id="savecompositemap">SaveCompositeMap</h1>
 <p><strong>服务类型</strong>: <code>map_manager/srv/SaveCompositeMap</code></p>
-<p><strong>服务名</strong>: <code>/map_manager/save_composite_map</code></p>
+<p><strong>服务名</strong>: <code>${MM}/save_composite_map</code></p>
 <h2 id="_1">描述</h2>
 <p>保存复合地图到磁盘。支持保存为目录格式或 <code>.mmap</code> 压缩包格式。
 保存时会同时保存所有楼层的定位层、导航层、语义层和虚拟层数据。</p>
@@ -356,15 +356,15 @@
 <h2 id="_2">使用示例</h2>
 <h3 id="_3">命令行调用</h3>
 <pre><code class="language-bash"># 保存为目录格式
-ros2 service call /map_manager/save_composite_map map_manager/srv/SaveCompositeMap \
+ros2 service call ${MM}/save_composite_map map_manager/srv/SaveCompositeMap \
   &quot;{map_path: '/opt/fftai/Navigation/Map/my_map', compress: false}&quot;
 
 # 保存为压缩包格式
-ros2 service call /map_manager/save_composite_map map_manager/srv/SaveCompositeMap \
+ros2 service call ${MM}/save_composite_map map_manager/srv/SaveCompositeMap \
   &quot;{map_path: '/opt/fftai/Navigation/Map/my_map', compress: true}&quot;
 
 # 路径以 .mmap 结尾时自动压缩
-ros2 service call /map_manager/save_composite_map map_manager/srv/SaveCompositeMap \
+ros2 service call ${MM}/save_composite_map map_manager/srv/SaveCompositeMap \
   &quot;{map_path: '/opt/fftai/Navigation/Map/my_map.mmap'}&quot;
 </code></pre>
 <h3 id="python">Python 示例</h3>
@@ -376,7 +376,7 @@ class MapSaver(Node):
     def __init__(self):
         super().__init__('map_saver')
         self.client = self.create_client(
-            SaveCompositeMap, '/map_manager/save_composite_map')
+            SaveCompositeMap, '${MM}/save_composite_map')
         self.client.wait_for_service()
 
     def save(self, path: str, compress: bool = False):
@@ -413,7 +413,7 @@ class MapSaver : public rclcpp::Node {
 public:
     MapSaver() : Node(&quot;map_saver&quot;) {
         client_ = create_client&lt;map_manager::srv::SaveCompositeMap&gt;(
-            &quot;/map_manager/save_composite_map&quot;);
+            &quot;${MM}/save_composite_map&quot;);
         client_-&gt;wait_for_service();
     }
 

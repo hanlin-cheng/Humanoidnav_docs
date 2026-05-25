@@ -287,26 +287,14 @@
               
                 <h1 id="removeallforbiddenareas">RemoveAllForbiddenAreas</h1>
 <p><strong>服务类型</strong>: <code>map_manager/srv/RemoveAllForbiddenAreas</code></p>
-<p><strong>服务名</strong>: <code>/map_manager/remove_all_forbidden_areas</code></p>
+<p><strong>服务名</strong>: <code>${MM}/remove_all_forbidden_areas</code></p>
 <h2 id="_1">描述</h2>
-<p>删除所有禁区（可按楼层过滤）</p>
+<p>无条件删除<strong>所有楼层</strong>的全部禁区。请求无字段。</p>
+<p>与 <a href="../remove_forbidden_areas/">RemoveForbiddenAreas</a> 的区别：
+- <code>RemoveAllForbiddenAreas</code>：无字段，固定清空所有楼层
+- <code>RemoveForbiddenAreas</code>：可按 <code>floor_id</code> 过滤（空串也表示所有楼层）</p>
 <h2 id="request">请求 (Request)</h2>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>floor_id</td>
-<td>string</td>
-<td>楼层唯一标识</td>
-</tr>
-</tbody>
-</table>
+<p>无字段。</p>
 <h2 id="response">响应 (Response)</h2>
 <table>
 <thead>
@@ -330,14 +318,13 @@
 <tr>
 <td>count</td>
 <td>int32</td>
-<td>操作影响的项目数量</td>
+<td>删除的禁区总数</td>
 </tr>
 </tbody>
 </table>
 <h2 id="_2">使用示例</h2>
 <h3 id="_3">命令行调用</h3>
-<pre><code class="language-bash">ros2 service call /map_manager/remove_all_forbidden_areas map_manager/srv/RemoveAllForbiddenAreas \
-  &quot;{floor_id: '1F'}&quot;
+<pre><code class="language-bash">ros2 service call /map_manager/remove_all_forbidden_areas map_manager/srv/RemoveAllForbiddenAreas &quot;{}&quot;
 </code></pre>
               
             </div>

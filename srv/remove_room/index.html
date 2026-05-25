@@ -287,7 +287,7 @@
               
                 <h1 id="removeroom">RemoveRoom</h1>
 <p><strong>服务类型</strong>: <code>map_manager/srv/RemoveRoom</code></p>
-<p><strong>服务名</strong>: <code>/map_manager/remove_room</code></p>
+<p><strong>服务名</strong>: <code>${MM}/remove_room</code></p>
 <h2 id="_1">描述</h2>
 <p>删除指定房间</p>
 <h2 id="request">请求 (Request)</h2>
@@ -341,7 +341,7 @@
 </table>
 <h2 id="_2">使用示例</h2>
 <h3 id="_3">命令行调用</h3>
-<pre><code class="language-bash">ros2 service call /map_manager/remove_room map_manager/srv/RemoveRoom \
+<pre><code class="language-bash">ros2 service call ${MM}/remove_room map_manager/srv/RemoveRoom \
   &quot;{floor_id: '1F', room_id: ''}&quot;
 </code></pre>
               

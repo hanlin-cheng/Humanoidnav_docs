@@ -287,9 +287,9 @@
               
                 <h1 id="removeforbiddenareas">RemoveForbiddenAreas</h1>
 <p><strong>服务类型</strong>: <code>map_manager/srv/RemoveForbiddenAreas</code></p>
-<p><strong>服务名</strong>: <code>/map_manager/remove_forbidden_areas</code></p>
+<p><strong>服务名</strong>: <code>${MM}/remove_forbidden_areas</code></p>
 <h2 id="_1">描述</h2>
-<p>批量删除禁区（可按楼层过滤）</p>
+<p>按楼层批量删除禁区。<code>floor_id</code> 为空串时，删除所有楼层的禁区。</p>
 <h2 id="request">请求 (Request)</h2>
 <table>
 <thead>
@@ -303,7 +303,7 @@
 <tr>
 <td>floor_id</td>
 <td>string</td>
-<td>楼层唯一标识</td>
+<td>楼层唯一标识；空串表示所有楼层</td>
 </tr>
 </tbody>
 </table>
@@ -330,14 +330,15 @@
 <tr>
 <td>count</td>
 <td>int32</td>
-<td>操作影响的项目数量</td>
+<td>删除的禁区数量</td>
 </tr>
 </tbody>
 </table>
 <h2 id="_2">使用示例</h2>
 <h3 id="_3">命令行调用</h3>
-<pre><code class="language-bash">ros2 service call /map_manager/remove_forbidden_areas map_manager/srv/RemoveForbiddenAreas \
+<pre><code class="language-bash">ros2 service call ${MM}/remove_forbidden_areas map_manager/srv/RemoveForbiddenAreas \
   &quot;{floor_id: '1F'}&quot;
+
 </code></pre>
               
             </div>

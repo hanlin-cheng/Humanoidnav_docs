@@ -299,7 +299,7 @@
               
                 <h1 id="addforbiddenarea">AddForbiddenArea</h1>
 <p><strong>服务类型</strong>: <code>map_manager/srv/AddForbiddenArea</code></p>
-<p><strong>服务名</strong>: <code>/map_manager/add_forbidden_area</code></p>
+<p><strong>服务名</strong>: <code>${MM}/add_forbidden_area</code></p>
 <h2 id="_1">描述</h2>
 <p>添加禁区（keepout zone）到指定楼层。禁区是一个多边形区域，机器人不可进入。
 添加禁区时，系统会自动为多边形的每条边创建虚拟墙。</p>
@@ -360,12 +360,12 @@
 <h2 id="_2">使用示例</h2>
 <h3 id="_3">命令行调用</h3>
 <pre><code class="language-bash"># 添加矩形禁区
-ros2 service call /map_manager/add_forbidden_area map_manager/srv/AddForbiddenArea \
-  &quot;{floor_id: 'F1', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 2.0, y: 0.0, z: 0.0}, {x: 2.0, y: 2.0, z: 0.0}, {x: 0.0, y: 2.0, z: 0.0}]}}}&quot;
+ros2 service call ${MM}/add_forbidden_area map_manager/srv/AddForbiddenArea \
+  &quot;{floor_id: '1F', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 2.0, y: 0.0, z: 0.0}, {x: 2.0, y: 2.0, z: 0.0}, {x: 0.0, y: 2.0, z: 0.0}]}}}&quot;
 
 # 添加三角形禁区
-ros2 service call /map_manager/add_forbidden_area map_manager/srv/AddForbiddenArea \
-  &quot;{floor_id: 'F1', area: {id: 2, boundary: {points: [{x: 5.0, y: 5.0, z: 0.0}, {x: 7.0, y: 5.0, z: 0.0}, {x: 6.0, y: 7.0, z: 0.0}]}}}&quot;
+ros2 service call ${MM}/add_forbidden_area map_manager/srv/AddForbiddenArea \
+  &quot;{floor_id: '1F', area: {id: 2, boundary: {points: [{x: 5.0, y: 5.0, z: 0.0}, {x: 7.0, y: 5.0, z: 0.0}, {x: 6.0, y: 7.0, z: 0.0}]}}}&quot;
 </code></pre>
 <h3 id="python">Python 示例</h3>
 <pre><code class="language-python">from map_manager.srv import AddForbiddenArea
@@ -379,7 +379,7 @@ class ForbiddenAreaManager(Node):
     def __init__(self):
         super().__init__('forbidden_area_manager')
         self.client = self.create_client(
-            AddForbiddenArea, '/map_manager/add_forbidden_area')
+            AddForbiddenArea, '${MM}/add_forbidden_area')
         self.client.wait_for_service()
         self.next_id = 1
 
@@ -429,13 +429,13 @@ rclpy.init()
 manager = ForbiddenAreaManager()
 
 # 添加矩形禁区
-manager.add_rectangle('F1', 0.0, 0.0, 2.0, 2.0)
+manager.add_rectangle('1F', 0.0, 0.0, 2.0, 2.0)
 
 # 添加自定义多边形禁区
-manager.add_area('F1', [(5.0, 5.0), (7.0, 5.0), (8.0, 7.0), (6.0, 8.0), (4.0, 7.0)])
+manager.add_area('1F', [(5.0, 5.0), (7.0, 5.0), (8.0, 7.0), (6.0, 8.0), (4.0, 7.0)])
 
 # 添加近似圆形禁区
-manager.add_circle_approx('F1', 10.0, 10.0, 1.5, segments=12)
+manager.add_circle_approx('1F', 10.0, 10.0, 1.5, segments=12)
 
 rclpy.shutdown()
 </code></pre>
@@ -449,7 +449,7 @@ class ForbiddenAreaManager : public rclcpp::Node {
 public:
     ForbiddenAreaManager() : Node(&quot;forbidden_area_manager&quot;), next_id_(1) {
         client_ = create_client&lt;map_manager::srv::AddForbiddenArea&gt;(
-            &quot;/map_manager/add_forbidden_area&quot;);
+            &quot;${MM}/add_forbidden_area&quot;);
         client_-&gt;wait_for_service();
     }
 

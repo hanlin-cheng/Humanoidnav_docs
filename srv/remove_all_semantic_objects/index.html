@@ -287,7 +287,7 @@
               
                 <h1 id="removeallsemanticobjects">RemoveAllSemanticObjects</h1>
 <p><strong>服务类型</strong>: <code>map_manager/srv/RemoveAllSemanticObjects</code></p>
-<p><strong>服务名</strong>: <code>/map_manager/remove_all_semantic_objects</code></p>
+<p><strong>服务名</strong>: <code>${MM}/remove_all_semantic_objects</code></p>
 <h2 id="_1">描述</h2>
 <p>删除所有语义对象（可按楼层和类型过滤）</p>
 <h2 id="request">请求 (Request)</h2>
@@ -341,7 +341,7 @@
 </table>
 <h2 id="_2">使用示例</h2>
 <h3 id="_3">命令行调用</h3>
-<pre><code class="language-bash">ros2 service call /map_manager/remove_all_semantic_objects map_manager/srv/RemoveAllSemanticObjects \
+<pre><code class="language-bash">ros2 service call ${MM}/remove_all_semantic_objects map_manager/srv/RemoveAllSemanticObjects \
   &quot;{floor_id: '1F', object_type: ''}&quot;
 </code></pre>
               

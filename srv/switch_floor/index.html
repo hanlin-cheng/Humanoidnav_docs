@@ -297,7 +297,7 @@
               
                 <h1 id="switchfloor">SwitchFloor</h1>
 <p><strong>服务类型</strong>: <code>map_manager/srv/SwitchFloor</code></p>
-<p><strong>服务名</strong>: <code>/map_manager/switch_floor</code></p>
+<p><strong>服务名</strong>: <code>${MM}/switch_floor</code></p>
 <h2 id="_1">描述</h2>
 <p>切换到指定楼层。支持直接切换和通过过渡点（电梯、楼梯等）切换两种方式。
 切换楼层时会自动通知 Lightning-LM 加载对应楼层的定位地图。</p>
@@ -363,12 +363,12 @@
 <h2 id="_2">使用示例</h2>
 <h3 id="_3">命令行调用</h3>
 <pre><code class="language-bash"># 直接切换楼层
-ros2 service call /map_manager/switch_floor map_manager/srv/SwitchFloor \
-  &quot;{floor_id: 'F2', initial_pose: {x: 0.0, y: 0.0, theta: 0.0}, use_transition: false}&quot;
+ros2 service call ${MM}/switch_floor map_manager/srv/SwitchFloor \
+  &quot;{floor_id: '2F', initial_pose: {x: 0.0, y: 0.0, theta: 0.0}, use_transition: false}&quot;
 
 # 使用电梯过渡点切换
-ros2 service call /map_manager/switch_floor map_manager/srv/SwitchFloor \
-  &quot;{floor_id: 'F2', use_transition: true, transition_id: 'elevator_1'}&quot;
+ros2 service call ${MM}/switch_floor map_manager/srv/SwitchFloor \
+  &quot;{floor_id: '2F', use_transition: true, transition_id: 'elevator_1'}&quot;
 </code></pre>
 <h3 id="python">Python 示例</h3>
 <pre><code class="language-python">from map_manager.srv import SwitchFloor
@@ -379,7 +379,7 @@ from rclpy.node import Node
 class FloorSwitcher(Node):
     def __init__(self):
         super().__init__('floor_switcher')
-        self.client = self.create_client(SwitchFloor, '/map_manager/switch_floor')
+        self.client = self.create_client(SwitchFloor, '${MM}/switch_floor')
         self.client.wait_for_service()
 
     def switch_direct(self, floor_id: str, x: float = 0.0, y: float = 0.0, theta: float = 0.0):
@@ -413,11 +413,11 @@ class FloorSwitcher(Node):
 rclpy.init()
 switcher = FloorSwitcher()
 
-# 直接切换到 F2
-switcher.switch_direct('F2', x=5.0, y=3.0, theta=1.57)
+# 直接切换到 2F
+switcher.switch_direct('2F', x=5.0, y=3.0, theta=1.57)
 
 # 使用电梯切换
-switcher.switch_via_transition('F3', 'elevator_main')
+switcher.switch_via_transition('3F', 'elevator_main')
 
 rclpy.shutdown()
 </code></pre>
@@ -430,7 +430,7 @@ class FloorSwitcher : public rclcpp::Node {
 public:
     FloorSwitcher() : Node(&quot;floor_switcher&quot;) {
         client_ = create_client&lt;map_manager::srv::SwitchFloor&gt;(
-            &quot;/map_manager/switch_floor&quot;);
+            &quot;${MM}/switch_floor&quot;);
         client_-&gt;wait_for_service();
     }
 

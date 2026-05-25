@@ -389,7 +389,7 @@
 <h2 id="_5">使用示例</h2>
 <h3 id="_6">在服务中使用</h3>
 <pre><code class="language-bash"># 添加楼层时使用 Floor 消息
-ros2 service call /map_manager/add_floor map_manager/srv/AddFloor \
+ros2 service call ${MM}/add_floor map_manager/srv/AddFloor \
   &quot;{floor: {
     floor_id: '1F',
     name: 'First Floor',

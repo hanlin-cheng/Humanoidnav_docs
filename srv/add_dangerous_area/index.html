@@ -297,7 +297,7 @@
               
                 <h1 id="adddangerousarea">AddDangerousArea</h1>
 <p><strong>服务类型</strong>: <code>map_manager/srv/AddDangerousArea</code></p>
-<p><strong>服务名</strong>: <code>/map_manager/add_dangerous_area</code></p>
+<p><strong>服务名</strong>: <code>${MM}/add_dangerous_area</code></p>
 <h2 id="_1">描述</h2>
 <p>添加限速区（危险区域）到指定楼层。限速区是一个多边形区域，机器人在此区域内需要降低速度。
 与禁区不同，限速区允许机器人通过，但会限制其最大速度。</p>
@@ -353,12 +353,12 @@
 <h2 id="_2">使用示例</h2>
 <h3 id="_3">命令行调用</h3>
 <pre><code class="language-bash"># 添加矩形限速区，限速 0.5 m/s
-ros2 service call /map_manager/add_dangerous_area map_manager/srv/AddDangerousArea \
-  &quot;{floor_id: 'F1', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 3.0, y: 0.0, z: 0.0}, {x: 3.0, y: 3.0, z: 0.0}, {x: 0.0, y: 3.0, z: 0.0}]}, speed_limit: 0.5}}&quot;
+ros2 service call ${MM}/add_dangerous_area map_manager/srv/AddDangerousArea \
+  &quot;{floor_id: '1F', area: {id: 1, boundary: {points: [{x: 0.0, y: 0.0, z: 0.0}, {x: 3.0, y: 0.0, z: 0.0}, {x: 3.0, y: 3.0, z: 0.0}, {x: 0.0, y: 3.0, z: 0.0}]}, speed_limit: 0.5}}&quot;
 
 # 添加走廊限速区，限速 0.3 m/s
-ros2 service call /map_manager/add_dangerous_area map_manager/srv/AddDangerousArea \
-  &quot;{floor_id: 'F1', area: {id: 2, boundary: {points: [{x: 10.0, y: 0.0, z: 0.0}, {x: 15.0, y: 0.0, z: 0.0}, {x: 15.0, y: 2.0, z: 0.0}, {x: 10.0, y: 2.0, z: 0.0}]}, speed_limit: 0.3}}&quot;
+ros2 service call ${MM}/add_dangerous_area map_manager/srv/AddDangerousArea \
+  &quot;{floor_id: '1F', area: {id: 2, boundary: {points: [{x: 10.0, y: 0.0, z: 0.0}, {x: 15.0, y: 0.0, z: 0.0}, {x: 15.0, y: 2.0, z: 0.0}, {x: 10.0, y: 2.0, z: 0.0}]}, speed_limit: 0.3}}&quot;
 </code></pre>
 <h3 id="python">Python 示例</h3>
 <pre><code class="language-python">from map_manager.srv import AddDangerousArea
@@ -371,7 +371,7 @@ class DangerousAreaManager(Node):
     def __init__(self):
         super().__init__('dangerous_area_manager')
         self.client = self.create_client(
-            AddDangerousArea, '/map_manager/add_dangerous_area')
+            AddDangerousArea, '${MM}/add_dangerous_area')
         self.client.wait_for_service()
         self.next_id = 1
 
@@ -415,10 +415,10 @@ rclpy.init()
 manager = DangerousAreaManager()
 
 # 添加矩形限速区（0.5 m/s）
-manager.add_rectangle('F1', 0.0, 0.0, 3.0, 3.0, speed_limit=0.5)
+manager.add_rectangle('1F', 0.0, 0.0, 3.0, 3.0, speed_limit=0.5)
 
 # 添加自定义多边形限速区
-manager.add_area('F1',
+manager.add_area('1F',
     [(5.0, 5.0), (8.0, 5.0), (8.0, 8.0), (5.0, 8.0)],
     speed_limit=0.3)
 
@@ -433,7 +433,7 @@ class DangerousAreaManager : public rclcpp::Node {
 public:
     DangerousAreaManager() : Node(&quot;dangerous_area_manager&quot;), next_id_(1) {
         client_ = create_client&lt;map_manager::srv::AddDangerousArea&gt;(
-            &quot;/map_manager/add_dangerous_area&quot;);
+            &quot;${MM}/add_dangerous_area&quot;);
         client_-&gt;wait_for_service();
     }
 
